@@ -3,9 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <a href="https://code.jquery.com/jquery-1.11.3.min.js">https://code.jquery.com/jquery-1.11.3.min.js</a>
-</head>
-<body>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/vader/jquery-ui.css"/>
 
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+</head>
+
+<body>
+<button id="button1" class="btn-primary">Button with event</button>
+<hr/>
+<div>
+    <input type="text">
+    <button class="btn btn-submit" id="button2">Search</button>
+</div>
 </body>
 </html>
+
+<script>
+    $("#button1").click
+    (
+            function()
+            {
+                alert("this is a button");
+            }
+
+    )
+</script>
