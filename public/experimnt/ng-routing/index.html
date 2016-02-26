@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="WhiteBoardApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ng-route</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular-route.js"></script>
+    <script src="ng-route.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+    <h1>Ng Route</h1>
+
+    <a href="#/home" class="btn btn-primary" ng-class = "{'active' : $location.url().indexOf('home')!= -1}">Home</a>
+    <a href="#/profile" class="btn btn-success">Profile</a>
+    <a href="#/admin" class="btn btn-danger">Admin</a>
+
+    <hr/>
+
+    <div ng-view></div>
+    <hr/>
+
+</div>
+
+
+
+</body>
+</html>

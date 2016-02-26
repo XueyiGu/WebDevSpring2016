@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="WhiteBoard">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJs</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular.js"></script>
+    <script src="app.js"></script>
+
+</head>
+<body>
+<div class="container" ng-controller="MovieController">
+    <h1>Movie List</h1>
+    <table class="table" >
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Year</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+        <tr>
+            <td><input class="form-control" ng-model = "item.id"></td>
+            <td><input class="form-control" ng-model = "item.title"></td>
+            <td><input class="form-control" ng-model = "item.year"></td>
+            <td><button class="btn btn-primary" ng-click="addMovie(item)">add</button></td>
+            <td><button class="btn btn-primary" ng-click="updateMovie(item)">update</button></td>
+        </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="item in movies">
+                <td>{{item.id}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.year}}</td>
+                <td><button class="btn btn-info" ng-click="deleteMovie($index)">Delete</button></td>
+                <td><button class="btn btn-success" ng-click="selectMovie(item, $index)">Select</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
