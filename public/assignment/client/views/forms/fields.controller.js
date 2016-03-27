@@ -19,11 +19,14 @@
                 .then(function(response){
                     $scope.fields = response.data;
                 });
-            FormService
-                .findFormById(formId)
-                .then(function(response){
-                    $scope.form = response.data;
-                })
+            //FormService
+            //    .findAllFormsForUser($scope.currentUser._id)
+            //    .then(function(response){
+            //        for(var u in response.data){
+            //            console.log(response.data[u]._id);
+            //        }
+            //        $scope.forms = response.data;
+            //    })
         }
         init();
 
@@ -35,6 +38,7 @@
             {key: "Checkboxes Field", value: "CHECKBOXES"},
             {key: "Radio Buttons Field", value: "RADIOS"}
         ];
+
         function getFieldType(fieldType) {
             for (var k in typeMap) {
                 console.log(typeMap[k].key + " " + typeMap[k].value);
@@ -45,6 +49,7 @@
         }
 
         $scope.addField = function(fieldType){
+            console.log('add field for form ' + formId);
             var type = getFieldType(fieldType);
             var field = {"label":"", "type": type, "placeholder": "","options" : null};
             FieldService

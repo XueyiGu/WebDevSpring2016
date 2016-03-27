@@ -9,21 +9,24 @@
 
     function formController($scope, FormService) {
 
-        //find all the forms for user
-        FormService
-            .findAllFormsForUser($scope.currentUser._id)
-            .then(function(response){
-                $scope.forms = response.data;
-            });
+        function init(){
+            //find all the forms for user
+            FormService
+                .findAllFormsForUser($scope.currentUser._id)
+                .then(function(response){
+                    $scope.forms = response.data;
+                });
+        }
+
+        init();
 
         $scope.addForm = function(form)
         {
             console.log("addForm");
+            form.fields = [];
             FormService
                 .createFormForUser($scope.currentUser._id, form)
-                .then(function(response){
-                    $scope.forms.push(response.data);
-                });
+                .then(init);
         };
 
         $scope.updateForm = function(form)

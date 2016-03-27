@@ -120,7 +120,7 @@ module.exports = function() {
     function createField(formid, field){
         field._id = "ID_" + (new Date()).getTime();
         for(var u in mock){
-            if(mock[u]._id = formid){
+            if(mock[u]._id == formid){
                 mock[u].fields.push(field);
                 return field;
             }
