@@ -37,13 +37,13 @@
                 </div>
                 <div ng-switch-when="TEXTAREA">
                     <label>{{field.label}}</label>
-                    <div class="input-group">
+                    <div>
                         <textarea class="form-control" placeholder={{field.placeholder}}></textarea>
                     </div>
                 </div>
                 <div ng-switch-when="CHECKBOXES">
                     <label>{{field.label}}</label>
-                    <div class="input-group">
+                    <div>
                         <div class="checkbox">
                             <div ng-repeat="op in field.options">
                                 <label>
@@ -67,7 +67,7 @@
                 </div>
                 <div ng-switch-default>
                     <label>{{field.label}}</label>
-                    <div class="input-group">
+                    <div>
                         <input type="date" placeholder={{field.placeholder}} class="form-control">
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                 <button ng-click="deleteField(field)" type="button" class="btn btn-danger">
                     <span  class="glyphicon glyphicon-remove"></span> 
                 </button>
-                 <button ng-click="orderField" type="button" class="btn btn-info">
+                 <button ng-click="orderField()" type="button" class="btn btn-info">
                     <span  class="glyphicon glyphicon-align-justify"></span> 
                 </button>
             </div>
@@ -99,7 +99,7 @@
         <div>
             <div class="col-sm-10">
                 <select ng-model="fieldType" class="form-control" id="input">
-                    <option>Single Line Text Field</option>
+                    <option >Single Line Text Field</option>
                     <option>Date Field</option>
                     <option>Dropdown Field</option>
                     <option>Checkboxes Field</option>

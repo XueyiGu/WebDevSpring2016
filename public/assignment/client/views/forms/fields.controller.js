@@ -7,7 +7,7 @@
         .module("FormBuilderApp")
         .controller("FieldController", fieldController);
 
-    function fieldController($scope,$routeParams, FieldService, FormService) {
+    function fieldController($scope, $routeParams, FieldService, FormService) {
 
         //constant variables
         var formId = $routeParams.formId;
@@ -104,6 +104,13 @@
             console.log('delete field ' + field._id + ' of form ' + formId);
             FieldService
                 .deleteFieldForForm(formId, field._id)
+                .then(init);
+        }
+
+        $scope.orderField = function(){
+            var form = $scope.form.fields;
+            FormService
+                .updateFormById(formId, form)
                 .then(init);
         }
 
