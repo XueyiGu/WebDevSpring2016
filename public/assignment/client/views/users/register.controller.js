@@ -30,15 +30,20 @@
                 $scope.message = "Passwords must match";
                 return;
             }
-            var checkuser = UserService.findUserByCredentials(user);
-            if (checkuser != null) {
-                $scope.message = "User already exists";
-                return;
-            }
+            //var checkuser = UserService.findUserByCredentials(user);
+            //if (checkuser != null) {
+            //    $scope.message = "User already exists";
+            //    return;
+            //}
 
-            var newuser = UserService.createUser($scope.user);
-            UserService.setCurrentUser(newuser);
-            $location.url("/profile");
+            UserService
+                .createUser(user)
+                .then(function(response){
+                    if(response.data) {
+                        UserService.setCurrentUser(response.data);
+                        $location.url("/profile");
+                    }
+                })
         }
     }
 })();

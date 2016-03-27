@@ -11,7 +11,7 @@
                     <li role="presentation" class="active">
                         <a href="forms.view.html">Forms</a>
                     </li>
-                    <li role="presentation"><a href="form-fields.view.html">Fields</a> </li>
+                    <li role="presentation"><a href="#/fields">Fields</a> </li>
                 </ul>
             </div>
 
@@ -33,7 +33,7 @@
 
                     <tbody>
                     <tr>
-                        <td><input ng-model="form.form_id" type="text" class="form-control" placeholder="name"></td>
+                        <td><input ng-model="form._id" type="text" class="form-control" placeholder="name"></td>
                         <td><input ng-model="form.title" type="text" class="form-control" placeholder="name"></td>
                         <td>
                             <button ng-click="addForm(form)" class="glyphicon glyphicon-plus btn btn-primary"></button>
@@ -41,22 +41,19 @@
                         </td>
                     </tr>
                     <tr ng-repeat="form in forms">
-                        <td>{{form.form_id}}</td>
-                        <td>{{form.title}}</td>
+                        <td>{{form._id}}</td>
+                        <td><a href = "#/fields/{{form._id}}">{{form.title}}</a></td>
                         <td>
-                            <button class="glyphicon glyphicon-remove btn btn-danger" ng-click="deleteForm($index)"></button>
+                            <button class="glyphicon glyphicon-remove btn btn-danger" ng-click="deleteForm(form)"></button>
                             <button class="glyphicon glyphicon-pencil btn btn-info" ng-click="selectForm(form, $index)"></button>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-
-
         </div>
     </div>
 </div>
-
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->

@@ -30,6 +30,11 @@
                     controller: "FormController"
                 })
 
+                .when("/fields/:formId", {
+                    templateUrl: "views/forms/fields.view.html",
+                    controller: "FieldController"
+                })
+
                 .when("/admin", {
                     templateUrl: "views/admin/admin.view.html"
                 })
