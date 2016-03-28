@@ -36,7 +36,8 @@
                 })
 
                 .when("/admin", {
-                    templateUrl: "views/admin/admin.view.html"
+                    templateUrl: "views/admin/admin.view.html",
+                    controller: "AdminController"
                 })
                 .otherwise({
                     redirectTo: "views/home/home.view.html"

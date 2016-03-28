@@ -81,10 +81,10 @@
             var optionArray = [];
             if (isOption) {
                 console.log(field.optionText);
-                var oa = field.optionText;
-                for (var o in oa) {
+                var text = field.optionText;
+                for (var o in text) {
                     console.log(o);
-                    var a = oa[o].split(":");
+                    var a = text[o].split(":");
                     optionArray.push({
                         label: a[0],
                         value: a[1]

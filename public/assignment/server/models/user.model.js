@@ -8,6 +8,7 @@ module.exports = function() {
         findUsersByIds: findUsersByIds,
         findAllUsers: findAllUsers,
         updateUser: updateUser,
+        updateUserByAdmin: updateUserByAdmin,
         deleteUserById: deleteUserById
     };
     return api;
@@ -29,6 +30,18 @@ module.exports = function() {
             }
         }
         return null;
+    }
+
+    function updateUserByAdmin(username, user){
+        for(var u in mock){
+            if(mock[u].username == username){
+                mock[u].username = user.username;
+                mock[u].password = user.password;
+                mock[u].roles = user.roles;
+                break;
+            }
+        }
+        return user;
     }
 
     function findAllUsers()

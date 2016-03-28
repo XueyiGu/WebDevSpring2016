@@ -5,9 +5,10 @@ module.exports = function(app, userModel) {
     app.post('/api/assignment/user/', register); //create user
     app.get('/api/assignment/user/findAllusers', findAllUsers);
     app.get('/api/assignment/user/:id', findUserById);
-    //app.get('/api/assignment/user', findUserByName);
+    app.get('/api/assignment/user/:username', findUserByName);
     app.get('/api/assignment/user', login);
     app.put('/api/assignment/user/:id', update);
+    app.put('/api/assignment/user/update/:username', updateUserByAdmin)
     app.delete('/api/assignment/user/:id',deleteUserById);
 
     function register(req, res) {
@@ -30,7 +31,7 @@ module.exports = function(app, userModel) {
     }
 
     function findUserByName(req, res) {
-        var username = req.query.username;
+        var username = req.params.username;
         var user = userModel.findUserByName(username);
         res.json(user);
     }
@@ -55,13 +56,19 @@ module.exports = function(app, userModel) {
         res.json(newUser);
     }
 
+    function updateUserByAdmin(req, res){
+        var username = req.params.username;
+        var user = req.body;
+        user = userModel.updateUserByAdmin(username, user);
+        res.json(user);
+    }
+
     function deleteUserById(req, res)
     {
         var index = req.params.id;
         var users = userModel.deleteUserById(index);
         res.json(users);
     }
-
 
     function logout(req, res) {
         req.session.destroy();
