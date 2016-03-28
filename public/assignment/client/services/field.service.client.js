@@ -8,7 +8,7 @@
         .module("FormBuilderApp")
         .factory("FieldService", FieldService);
 
-    function FieldService($rootScope, $http)
+    function FieldService($rootScope, $http, $q)
     {
         var service = {
             createFieldForForm: createFieldForForm,
@@ -22,32 +22,60 @@
 
         function createFieldForForm(formId, field)
         {
-            return $http.post('/api/assignment/form/'+formId+'/field', field);
+            var deferred = $q.defer();
+            $http
+                .post('/api/assignment/form/'+formId+'/field', field)
+                .then(function(response){
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
         }
 
         function getFieldsForForm(formId)
         {
+            var deferred = $q.defer();
             console.log('I am in field.service.client');
-            return $http.get('/api/assignment/form/'+formId+'/field');
+            $http
+                .get('/api/assignment/form/'+formId+'/field')
+                .then(function(response){
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
         }
 
         function getFieldFormForm(formId, fieldId)
         {
-            return $http.get('/api/assignment/form/'+formId+'/field/' + fieldId);
+            var deferred = $q.defer();
+            $http
+                .get('/api/assignment/form/'+formId+'/field/' + fieldId)
+                .then(function(response){
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
         }
 
         function deleteFieldForForm(formId, fieldId)
         {
-            return $http.delete('/api/assignment/form/'+formId+'/field/' + fieldId);
+            var deferred = $q.defer();
+            $http
+                .delete('/api/assignment/form/'+formId+'/field/' + fieldId)
+                .then(function(response){
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
         }
 
         function updateField(formId, fieldId, newField)
         {
-            if(!formId)
-            {
-                console.log("formId is null");
-            }
-            return $http.put('/api/assignment/form/'+formId+'/field/' + fieldId, newField);
+            var deferred = $q.defer();
+            setTimeout(function(){
+                $http
+                    .put('/api/assignment/form/'+formId+'/field/' + fieldId, newField)
+                    .then(function(response){
+                        deferred.resolve(response);
+                    })
+            }, 200);
+            return deferred.promise;
         }
     }
 })();

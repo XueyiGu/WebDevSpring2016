@@ -11,6 +11,9 @@
 
         //constant variables
         var formId = $routeParams.formId;
+        var formTitle = $routeParams.formTitle;
+        console.log(formTitle);
+        $scope.title = formTitle;
         //find all the fields for form
         console.log('I am in field controller');
         function init(){
@@ -19,14 +22,14 @@
                 .then(function(response){
                     $scope.fields = response.data;
                 });
-            //FormService
-            //    .findAllFormsForUser($scope.currentUser._id)
-            //    .then(function(response){
-            //        for(var u in response.data){
-            //            console.log(response.data[u]._id);
-            //        }
-            //        $scope.forms = response.data;
-            //    })
+            FormService
+                .findAllFormsForUser($scope.currentUser._id)
+                .then(function(response){
+                    for(var u in response.data){
+                        console.log(response.data[u]._id);
+                    }
+                    $scope.forms = response.data;
+                })
         }
         init();
 

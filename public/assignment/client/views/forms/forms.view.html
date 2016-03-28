@@ -11,7 +11,7 @@
                     <li role="presentation" class="active">
                         <a href="forms.view.html">Forms</a>
                     </li>
-                    <li role="presentation"><a href="#/fields">Fields</a> </li>
+                    <li role="presentation"><a href="#/fields/{{forms[0]._id}}&{{forms[0].title}}">Fields</a> </li>
                 </ul>
             </div>
 
@@ -42,7 +42,7 @@
                     </tr>
                     <tr ng-repeat="form in forms">
                         <td>{{form._id}}</td>
-                        <td><a href = "#/fields/{{form._id}}">{{form.title}}</a></td>
+                        <td><a href = "#/fields/{{form._id}}&{{form.title}}">{{form.title}}</a></td>
                         <td>
                             <button class="glyphicon glyphicon-remove btn btn-danger" ng-click="deleteForm(form)"></button>
                             <button class="glyphicon glyphicon-pencil btn btn-info" ng-click="selectForm(form, $index)"></button>

@@ -30,7 +30,7 @@
                     controller: "FormController"
                 })
 
-                .when("/fields/:formId", {
+                .when("/fields/:formId&:formTitle", {
                     templateUrl: "views/forms/fields.view.html",
                     controller: "FieldController"
                 })
