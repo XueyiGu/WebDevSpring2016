@@ -43,6 +43,9 @@
         ];
 
         function getFieldType(fieldType) {
+            if(fieldType == null){
+                return "DATE";
+            }
             for (var k in typeMap) {
                 console.log(typeMap[k].key + " " + typeMap[k].value);
                 if (typeMap[k].key == fieldType){
@@ -63,7 +66,7 @@
         $scope.editField=function(field){
             console.log(field.type + ' '+field.label);
             $scope.efield = field;
-            var isOption = !(field.type === 'TEXT' || field.type === 'TEXTAREA');
+            var isOption = !(field.type === 'TEXT' || field.type === 'TEXTAREA' || field.type == 'DATE');
 
             if (isOption) {
                 var optionList = [];
