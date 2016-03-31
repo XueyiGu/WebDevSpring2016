@@ -95,10 +95,10 @@
 
     <hr>
     <div>
-        <label for="input">Add New Field:</label>
+        <label for="addNew">Add New Field:</label>
         <div>
             <div class="col-sm-10">
-                <select ng-model="fieldType" class="form-control" id="input">
+                <select ng-model="fieldType" class="form-control" id="addNew">
                     <option>Single Line Text Field</option>
                     <option>Date Field</option>
                     <option>Dropdown Field</option>
@@ -146,7 +146,7 @@
                                        placeholder={{efield.label}}> 
                                 <br> 
                                 <label>Placeholder</label> 
-                            <textarea ng-model="efield.placeholder" class="form-control" 
+                                <textarea ng-model="efield.placeholder" class="form-control" 
                                       placeholder={{efield.placeholder}}></textarea> 
                             </form> 
                         </div> 
@@ -158,8 +158,9 @@
                                        placeholder={{efield.label}}> 
                                 <br> 
                                 <label>Options</label> 
-                            <textarea ng-model="efield.optionText" class="form-control" 
-                                      placeholder={{efield.optionText}} ng-list="&#10;" ng-trim="false"></textarea> 
+                                <textarea ng-model="efield.optionText" class="form-control"  rows="5"
+                                        ng-trim="false" placeholder="efield.optionText">
+                                </textarea> 
                             </form> 
                         </div> 
                         <div ng-switch-when="DATE"> 

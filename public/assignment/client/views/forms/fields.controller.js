@@ -57,7 +57,7 @@
         $scope.addField = function(fieldType){
             console.log('add field for form ' + formId);
             var type = getFieldType(fieldType);
-            var field = {"label":"", "type": type, "placeholder": "","options" : null};
+            var field = {"label":"New Field", "type": type, "placeholder": "","options" : null, "optionText":null};
             FieldService
                 .createFieldForForm(formId, field)
                 .then(init);
@@ -74,31 +74,30 @@
                 for (var o in ol) {
                     optionList.push(ol[o].label + ":" + ol[o].value)
                 }
-                console.log(optionList);
                 $scope.efield.optionText = optionList.join("\n");
-                console.log(field.optionText);
+                console.log($scope.efield.optionText);
             }
         }
 
         $scope.commitEdit = function (field){
 
-            var isOption = !(field.type == 'TEXT' || field.type == 'TEXTAREA');
+            var isOption = !(field.type == 'TEXT' || field.type == 'TEXTAREA' || field.type == 'DATE');
 
             var optionArray = [];
             if (isOption) {
-                console.log(field.optionText);
                 var text = field.optionText;
-                for (var o in text) {
-                    console.log(o);
-                    var a = text[o].split(":");
-                    optionArray.push({
-                        label: a[0],
-                        value: a[1]
-                    });
+                if(text != null){
+                    var textArray = text.split("\n");
+                    for(var a in textArray){
+                        var option = textArray[a].split(":");
+                        optionArray.push({
+                            label: option[0],
+                            value: option[1]
+                        });
+                    }
                 }
                 field.options = optionArray;
             }
-            console.log(field._id);
             FieldService
                 .updateField(formId, field._id, field)
                 .then(init);
