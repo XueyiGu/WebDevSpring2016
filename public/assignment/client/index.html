@@ -68,7 +68,9 @@
 
   <div ng-include="'views/sidebar/sidebar.view.html'"></div>
 
-  <div ng-view></div>
+  <div ng-view>
+    <div ng-class="{'active': $location.url()=='/home'}"></div>
+  </div>
 </div>
 
 

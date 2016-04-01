@@ -59,7 +59,7 @@
                     <div class="input-group">
                         <div ng-repeat="op in field.options" class="radio">
                             <label>
-                                <input type="radio" name={{op.label}} value={{op.value}} checked>
+                                <input type="radio" name={{op.label}} value={{op.value}}>
                                 {{op.label}}
                             </label>
                         </div>
@@ -74,7 +74,7 @@
             </div>
 
             <div class="col-sm-3">
-                <button ng-click="editField(field)" type="button" class="btn btn-warning"
+                <button ng-click="editField($index, field)" type="button" class="btn btn-warning"
                         data-toggle="modal" data-target="#editField">
                     <span  class="  glyphicon glyphicon-pencil"></span>
                 </button>
@@ -179,8 +179,8 @@
                                        placeholder={{efield.label}}> 
                                 <br> 
                                 <label>Options</label> 
-                            <textarea ng-model="efield.optionText" class="form-control" placeholder={{efield.optionText}}
-                                      ng-list="&#10;" ng-trim="false"></textarea> 
+                                <textarea ng-model="efield.optionText" class="form-control" placeholder={{efield.optionText}}
+                                      ng-trim="false"></textarea> 
                             </form> 
                         </div> 
                         <div ng-switch-default> 
@@ -192,7 +192,7 @@
                                 <br> 
                                 <label>Options</label> 
                             <textarea ng-model="efield.optionText" class="form-control" 
-                                      placeholder={{efield.optionText}} ng-list="&#10;" ng-trim="false"></textarea> 
+                                      placeholder={{efield.optionText}}  ng-trim="false"></textarea> 
                             </form> 
                         </div> 
                     </div>

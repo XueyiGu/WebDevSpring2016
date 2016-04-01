@@ -12,6 +12,7 @@
         //constant variables
         var formId = $routeParams.formId;
         var formTitle = $routeParams.formTitle;
+        var selectedFieldIndex = -1;
         console.log(formTitle);
         $scope.title = formTitle;
         //find all the fields for form
@@ -63,9 +64,17 @@
                 .then(init);
         }
 
-        $scope.editField=function(field){
+        $scope.editField=function(index, field){
+            selectedFieldIndex = index;
             console.log(field.type + ' '+field.label);
-            $scope.efield = field;
+            $scope.efield = {
+                _id: field._id,
+                label: field.label,
+                type: field.type,
+                placeholder: field.placeholder,
+                options: field.options,
+                optionText: field.optionText
+            };
             var isOption = !(field.type === 'TEXT' || field.type === 'TEXTAREA' || field.type == 'DATE');
 
             if (isOption) {
@@ -81,6 +90,7 @@
 
         $scope.commitEdit = function (field){
 
+            console.log('commit edit ' + field.type);
             var isOption = !(field.type == 'TEXT' || field.type == 'TEXTAREA' || field.type == 'DATE');
 
             var optionArray = [];
@@ -98,6 +108,7 @@
                 }
                 field.options = optionArray;
             }
+
             FieldService
                 .updateField(formId, field._id, field)
                 .then(init);
