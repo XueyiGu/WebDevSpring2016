@@ -138,6 +138,18 @@
                                        placeholder={{efield.placeholder}}> 
                             </form> 
                         </div> 
+                        <div ng-switch-when="EMAIL"> 
+                            <h3>Single Line Field</h3> 
+                            <form> 
+                                <label>Label</label> 
+                                <input ng-model="efield.label" class="form-control" type="text" 
+                                       placeholder={{efield.label}}> 
+                                <br> 
+                                <label>Placeholder</label> 
+                                <input ng-model="efield.placeholder" class="form-control" type="text" 
+                                       placeholder={{efield.placeholder}}> 
+                            </form> 
+                        </div> 
                         <div ng-switch-when="TEXTAREA"> 
                             <h3>Multi Line Field</h3> 
                             <form> 

@@ -75,7 +75,7 @@
                 options: field.options,
                 optionText: field.optionText
             };
-            var isOption = !(field.type === 'TEXT' || field.type === 'TEXTAREA' || field.type == 'DATE');
+            var isOption = !(field.type === 'TEXT' || field.type === 'TEXTAREA' || field.type == 'DATE' || field.type == 'EMAIL');
 
             if (isOption) {
                 var optionList = [];
