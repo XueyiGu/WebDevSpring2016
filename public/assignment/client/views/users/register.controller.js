@@ -30,11 +30,9 @@
                 $scope.message = "Passwords must match";
                 return;
             }
-            //var checkuser = UserService.findUserByCredentials(user);
-            //if (checkuser != null) {
-            //    $scope.message = "User already exists";
-            //    return;
-            //}
+            var emails = [];
+            emails.push(user.email);
+            user.emails = emails;
 
             UserService
                 .createUser(user)

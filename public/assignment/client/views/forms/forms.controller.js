@@ -13,8 +13,10 @@
             //find all the forms for user
             FormService
                 .findAllFormsForUser($scope.currentUser._id)
-                .then(function(response){
-                    $scope.forms = response.data;
+                .then(function(forms){
+                    console.log(forms);
+                    $scope.form = null;
+                    $scope.forms = forms.data;
                 });
         }
 
@@ -22,8 +24,13 @@
 
         $scope.addForm = function(form)
         {
+            //if this information exists, it's not allowed to add this form
+            if(form._id){
+                return;
+            }
             console.log("addForm");
             form.fields = [];
+            form.userId = $scope.currentUser._id;
             FormService
                 .createFormForUser($scope.currentUser._id, form)
                 .then(init);
@@ -33,19 +40,15 @@
         {
             FormService
                 .updateFormById($scope.form._id, form)
-                .then(function(response){
-                    $scope.forms[$scope.selectedFormIndex] = response.data;
-                });
+                .then(init);
         };
 
         $scope.deleteForm = function(form)
         {
-            var index = $scope.forms.indexOf(form);
+            var formId = form._id;
             FormService
-                .deleteFormById(index)
-                .then(function(response){
-                    $scope.forms.splice(index, 1);
-                });
+                .deleteFormById(formId)
+                .then(init);
         };
 
         $scope.selectForm = function(form)

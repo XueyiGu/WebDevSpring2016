@@ -43,8 +43,9 @@
             var deferred = $q.defer();
             $http
                 .get('/api/assignment/user?username='+ username + '&password='+ password)
-                .then(function(response){
-                    deferred.resolve(response);
+                .then(function(user){
+                    console.log('user.service.client: '+user);
+                    deferred.resolve(user);
                 });
             return deferred.promise;
         }

@@ -21,7 +21,9 @@
             FieldService
                 .getFieldsForForm(formId)
                 .then(function(response){
-                    $scope.fields = response.data;
+                    if(response.data.length > 0){
+                        $scope.fields = response.data[0].fields;
+                    }
                 });
             FormService
                 .findAllFormsForUser($scope.currentUser._id)
@@ -116,7 +118,6 @@
 
         $scope.cloneField = function(field){
             console.log('clone field ' + field.label);
-            field._id =
             FieldService
                 .createFieldForForm(formId, field)
                 .then(init);

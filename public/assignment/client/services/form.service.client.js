@@ -23,6 +23,7 @@
 
         function createFormForUser(userId, form)
         {
+            console.log('I am in form.service.client of create form');
             var deferred = $q.defer();
             $http
                 .post('/api/assignment/user/'+userId+'/form', form)
@@ -38,6 +39,7 @@
             $http
                 .get('/api/assignment/user/'+userId+'/form')
                 .then(function(response){
+                    console.log('form service client: '+response);
                     deferred.resolve(response);
                 });
             return deferred.promise;
