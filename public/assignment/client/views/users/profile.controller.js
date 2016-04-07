@@ -25,8 +25,9 @@
         init();
 
         $scope.updateUser = function(user) {
+            var userId = user._id;
             UserService
-                .updateUser(user)
+                .updateUser(userId, user)
                 .then(
                     function(response){
                         init();

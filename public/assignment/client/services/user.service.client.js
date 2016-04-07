@@ -50,11 +50,11 @@
             return deferred.promise;
         }
 
-        function updateUser(currentUser)
+        function updateUser(userId, currentUser)
         {
             var deferred = $q.defer();
             $http
-                .put('/api/assignment/user/' + currentUser._id, currentUser)
+                .put('/api/assignment/user/' + userId, currentUser)
                 .then(function(response){
                     deferred.resolve(response);
                 });

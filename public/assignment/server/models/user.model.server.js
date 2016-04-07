@@ -40,9 +40,6 @@ module.exports = function(mongoose, db) {
 
     function updateUser(userId, newUser)
     {
-        if(newUser._id){
-            newUser._id = null;
-        }
         return userModel.update({_id: userId}, {$set: newUser});
         //var deferred = q.defer();
         //userModel.update({_id: userId}, {$set: newUser}, function(err, course) {
