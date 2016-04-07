@@ -10,7 +10,7 @@ module.exports = function(app, userModel) {
     var auth = authorized;
 
 
-    app.get('/api/assignment/user/findAllusers',        findAllUsers);
+    app.get('/api/assignment/user/findAllusers',auth,       findAllUsers);
     app.get('/api/assignment/user/:id',                 findUserById);
     app.get('/api/assignment/user/:username',           findUserByName);
 
@@ -21,9 +21,9 @@ module.exports = function(app, userModel) {
     app.post('/api/assignment/user', auth, createUser),
 
 
-    app.put('/api/assignment/user/:id',                 update);
-    app.put('/api/assignment/user/update/:username',    updateUserByAdmin)
-    app.delete('/api/assignment/user/:id',              deleteUserById);
+    app.put('/api/assignment/user/:id', auth,              update);
+    app.put('/api/assignment/user/update/:username',auth,    updateUserByAdmin)
+    app.delete('/api/assignment/user/:id',auth,              deleteUserById);
 
     passport.use(new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
@@ -153,7 +153,7 @@ module.exports = function(app, userModel) {
                 function(users){
                     res.json(users);
                 },
-                function(){
+                function(err){
                     res.status(400).send(err);
                 }
             )
@@ -173,20 +173,6 @@ module.exports = function(app, userModel) {
             next();
         }
     };
-
-    //function register(req, res) {
-    //    var user = req.body;
-    //    userModel
-    //        .createUser(user)
-    //        .then(
-    //            function (doc) {
-    //                res.json(doc);
-    //            },
-    //            function (err) {
-    //                res.status(400).send(err);
-    //            }
-    //        );
-    //}
 
     function findAllUsers(req, res)
     {
@@ -231,37 +217,30 @@ module.exports = function(app, userModel) {
             );
     }
 
-    //function login(req, res) {
-    //    var username = req.query.username;
-    //    var password = req.query.password;
-    //    if(username != null && password != null)
-    //    {
-    //        var credentials = {
-    //            username: username,
-    //            password: password};
-    //        userModel
-    //            .findUserByCredentials(credentials)
-    //            .then(
-    //                function (doc) {
-    //                    res.json(doc);
-    //                },
-    //                function (err) {
-    //                    res.status(400).send(err);
-    //                }
-    //            );
-    //    }
-    //}
-
     function update(req, res){
-        var userId = req.params.id;
         var newUser = req.body;
+        if(!isAdmin(req.user)) {
+            delete newUser.roles;
+        }
+        if(typeof newUser.roles == "string") {
+            newUser.roles = newUser.roles.split(",");
+        }
+
         userModel
-            .updateUser(userId, newUser)
+            .updateUser(req.params.id, newUser)
             .then(
-                function (doc) {
-                    res.json(doc);
+                function(user){
+                    return userModel.findAllUsers();
                 },
-                function (err) {
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function(users){
+                    res.json(users);
+                },
+                function(err){
                     res.status(400).send(err);
                 }
             );
@@ -296,9 +275,4 @@ module.exports = function(app, userModel) {
                 }
             );
     }
-
-    //function logout(req, res) {
-    //    req.session.destroy();
-    //    res.send(200);
-    //}
 }
