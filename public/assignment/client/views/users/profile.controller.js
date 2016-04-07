@@ -28,14 +28,11 @@
                 .updateUser(user)
                 .then(
                     function(response){
-                        console.log('I am here, updating the use profile of ' + user._id + ' '+ user.email);
-                        if(response.data) {
-                            UserService.setCurrentUser(response.data);
-                            $location.url("/profile");
-                        }
+                        init();
+                        $scope.message = 'successfully updated';
                     },
                     function(err){
-                        $scope.message = err;
+                        $scope.error = err;
                     })
         }
     }
