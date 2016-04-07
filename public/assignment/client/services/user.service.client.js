@@ -31,7 +31,7 @@
             //creates a Defered Object which represents a task which will finish in the future
             var deferred = $q.defer();
             $http
-                .post('/api/assignment/user/', user)
+                .post('/api/assignment/register', user)
                 .then(function(response){
                     deferred.resolve(response);
                 });
