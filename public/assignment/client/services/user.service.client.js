@@ -20,8 +20,8 @@
             findAllUsers: findAllUsers,
             deleteUserById: deleteUserById,
 
-            setCurrentUser : setCurrentUser,
-            getCurrentUser: getCurrentUser
+            getCurrentUser: getCurrentUser,
+            logout: logout
         };
 
         return api;
@@ -42,7 +42,7 @@
         {
             var deferred = $q.defer();
             $http
-                .get('/api/assignment/user?username='+ username + '&password='+ password)
+                .post('/api/assignment/user?username='+ username + '&password='+ password)
                 .then(function(user){
                     console.log('user.service.client: '+user);
                     deferred.resolve(user);
@@ -106,14 +106,24 @@
             return deferred.promise;
         }
 
-        function setCurrentUser (user)
-        {
-            $rootScope.currentUser = user;
-        }
-
         function getCurrentUser()
         {
-            return $rootScope.currentUser;
+            var deferred = $q.defer();
+            $http
+                .get('/api/assignment/loggedin')
+                .then(function(user){
+                    deferred.resolve(user);
+                });
+            return deferred.promise;
+        }
+
+        function logout(){
+            var deferred = $q.defer();
+            $http.post('/api/assignment/logout')
+                .then(function(response){
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
         }
     }
 })();

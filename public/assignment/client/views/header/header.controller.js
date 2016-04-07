@@ -6,13 +6,20 @@
     "use strict";
     angular
         .module("FormBuilderApp")
-        .controller("HeaderController", function($scope, $location, UserService){
+        .controller("HeaderController", function($scope, $rootScope, $location, UserService){
             $scope.$location = $location;
             $scope.logout = logout;
 
             function logout() {
-                UserService.setCurrentUser(null);
-                $location.url("/home");
+                UserService
+                    .logout()
+                    .then(function(response){
+                        $rootScope.currentUser = null;
+                        $location.url('/home');
+                    },
+                        function(err) {
+                            $scope.error = err;
+                        });
             }
         });
 })();

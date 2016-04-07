@@ -7,22 +7,22 @@
         .module("FormBuilderApp")
         .controller("LoginController", loginController);
 
-    function loginController ($scope, UserService, $location) {
+    function loginController ($scope, $rootScope, UserService, $location) {
 
         $scope.login = login;
 
         function login(user) {
-            if(!user) {
-                return;
-            }
-            console.log('I am in controller');
             UserService
                 .findUserByCredentials(user.username, user.password)
-                .then(function(user){
-                    console.log(user);
-                    UserService.setCurrentUser(user.data);
-                    $location.url("/profile");
-                });
+                .then(
+                    function(user){
+                        console.log(user);
+                        $rootScope.currentUser = user.data;
+                        $location.url("/profile");
+                    },
+                    function(err) {
+                        $scope.message = err;
+                    });
         }
     }
 })();

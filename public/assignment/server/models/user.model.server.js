@@ -88,7 +88,7 @@ module.exports = function(mongoose, db) {
 
     function findUserByName(userName)
     {
-        var deferred = q.deter();
+        var deferred = q.defer();
         userModel.findOne({username: userName}, function(err, user){
             if(err){
                 deferred.reject(err);
@@ -101,7 +101,7 @@ module.exports = function(mongoose, db) {
     }
 
     function findUserById(userId) {
-        var deferred = q.deter();
+        var deferred = q.defer();
         userModel.findById({_id: userId}, function(err, user){
             if(err){
                 deferred.reject(err);

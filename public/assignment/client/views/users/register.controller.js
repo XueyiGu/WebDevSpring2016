@@ -36,12 +36,16 @@
 
             UserService
                 .createUser(user)
-                .then(function(response){
-                    if(response.data) {
-                        UserService.setCurrentUser(response.data);
-                        $location.url("/profile");
-                    }
-                })
+                .then(
+                    function(response){
+                        if(response.data) {
+                            UserService.setCurrentUser(response.data);
+                            $location.url("/profile");
+                        }
+                    },
+                    function(err) {
+                        $scope.error = err;
+                    })
         }
     }
 })();
