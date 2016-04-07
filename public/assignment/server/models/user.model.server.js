@@ -42,9 +42,10 @@ module.exports = function(mongoose, db) {
     {
         var deferred = q.defer();
         userModel.update({_id: userId}, {$set: newUser}, function(err, course) {
-            if(err){deferred.reject(err);}
-            else{
-                userModel.find(function(err, user){
+            if(err){
+                deferred.reject(err);
+            }else{
+                userModel.find({_id: userId},function(err, user){
                     if(err){
                         deferred.reject(err);
                     }

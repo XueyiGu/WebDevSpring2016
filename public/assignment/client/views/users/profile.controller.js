@@ -13,7 +13,8 @@
             UserService
                 .getCurrentUser()
                 .then(function(user){
-                    if(user){
+                    if(user.data){
+                        console.log(user.data);
                         $rootScope.currentUser = user.data;
                     }else{
                         $location.url("/login");
