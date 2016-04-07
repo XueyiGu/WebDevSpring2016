@@ -26,8 +26,16 @@
 
         $scope.updateUser = function(user) {
             var userId = user._id;
+            var newUser = {
+                "username": user.username,
+                "password": user.password,
+                "firstName": user.firstName,
+                "lastName": user.lastName,
+                "emails": user.emails,
+                "phones": user.phones
+            };
             UserService
-                .updateUser(userId, user)
+                .updateUser(userId, newUser)
                 .then(
                     function(response){
                         init();
