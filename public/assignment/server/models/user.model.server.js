@@ -40,23 +40,24 @@ module.exports = function(mongoose, db) {
 
     function updateUser(userId, newUser)
     {
-        var deferred = q.defer();
-        userModel.update({_id: userId}, {$set: newUser}, function(err, course) {
-            if(err){
-                deferred.reject(err);
-            }else{
-                userModel.find({_id: userId},function(err, user){
-                    if(err){
-                        deferred.reject(err);
-                    }
-                    else{
-                        deferred.resolve(user);
-                    }
-                });
-            }
-        });
-
-        return deferred.promise;
+        return userModel.update({_id: userId}, {$set: newUser});
+        //var deferred = q.defer();
+        //userModel.update({_id: userId}, {$set: newUser}, function(err, course) {
+        //    if(err){
+        //        deferred.reject(err);
+        //    }else{
+        //        userModel.find({_id: userId},function(err, user){
+        //            if(err){
+        //                deferred.reject(err);
+        //            }
+        //            else{
+        //                deferred.resolve(user);
+        //            }
+        //        });
+        //    }
+        //});
+        //
+        //return deferred.promise;
     }
 
     function findAllUsers()
