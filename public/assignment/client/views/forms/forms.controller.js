@@ -7,16 +7,30 @@
         .module("FormBuilderApp")
         .controller("FormController", formController);
 
-    function formController($scope, FormService) {
+    function formController($scope, $rootScope, FormService, UserService) {
 
+        var userId = null;
         function init(){
-            //find all the forms for user
-            FormService
-                .findAllFormsForUser($scope.currentUser._id)
-                .then(function(forms){
-                    console.log(forms);
-                    $scope.form = null;
-                    $scope.forms = forms.data;
+
+            //get the loggedin user
+            UserService
+                .getCurrentUser()
+                .then(function(user){
+                    if(user.data){
+                        console.log(user.data);
+                        $rootScope.currentUser = user.data;
+                        userId =  $rootScope.currentUser._id;
+                        //find all the forms for user
+                        FormService
+                            .findAllFormsForUser(userId)
+                            .then(function(forms){
+                                console.log(forms);
+                                $scope.form = null;
+                                $scope.forms = forms.data;
+                            });
+                    }else{
+                        $location.url("/login");
+                    }
                 });
         }
 

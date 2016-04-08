@@ -4,24 +4,30 @@
     <div class="row">
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Admin</h1>
+            <h1 class="page-header">Admin : Users</h1>
 
-            <h2 class="sub-header">Users</h2>
+            <div ng-if="error" class="alert alert-danger">
+                {{error}}
+            </div>
             <div class="tab-content table-responsive">
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th><div class="glyphicon glyphicon-triangle-bottom col-xs-3"></div>Username</th>
-                        <th><div class="glyphicon glyphicon-triangle-bottom col-xs-3"></div>Password</th>
-                        <th><div class="glyphicon glyphicon-triangle-bottom col-xs-3"></div>Role</th>
-                        <th><div class="glyphicon glyphicon-triangle-bottom col-xs-3"></div>Action</th>
+                        <th><div class="glyphicon glyphicon-triangle-bottom col-xs-2"></div>Username</th>
+                        <th><div class="glyphicon glyphicon-triangle-bottom col-xs-2"></div>Password</th>
+                        <th><div class="glyphicon glyphicon-triangle-bottom col-xs-2"></div>First Name</th>
+                        <th><div class="glyphicon glyphicon-triangle-bottom col-xs-2"></div>Last Name</th>
+                        <th><div class="glyphicon glyphicon-triangle-bottom col-xs-2"></div>Role</th>
+                        <th><div class="glyphicon glyphicon-triangle-bottom col-xs-2"></div>Action</th>
                     </tr>
                     </thead>
 
                     <tbody>
                     <tr>
                         <td><input ng-model="user.username" type="text" class="form-control" placeholder="Username"></td>
-                        <td><input ng-model="user.password" type="text" class="form-control" placeholder="Password"></td>
+                        <td><input ng-model="user.password" type="password" class="form-control" placeholder="Password"></td>
+                        <td><input ng-model="user.firstName" type="text" class="form-control" placeholder="First Name"></td>
+                        <td><input ng-model="user.lastName" type="text" class="form-control" placeholder="Last Name"></td>
                         <td><input ng-model="user.roles" type="text" class="form-control" placeholder="role1, role2"></td>
                         <td>
                             <button ng-click="addUser(user)" class="glyphicon glyphicon-plus btn btn-primary"></button>
@@ -29,8 +35,11 @@
                         </td>
                     </tr>
                     <tr ng-repeat="user in users">
+                        <td hidden="true">{{user_id}}</td>
                         <td>{{user.username}}</td>
                         <td>{{user.password}}</td>
+                        <td>{{user.firstName}}</td>
+                        <td>{{user.lastName}}</td>
                         <td>{{user.roles}}</td>
                         <td>
                             <div>

@@ -39,7 +39,7 @@
             $http
                 .get('/api/assignment/user/'+userId+'/form')
                 .then(function(response){
-                    console.log('form service client: '+response);
+                    console.log('form service client for: ' + userId +response);
                     deferred.resolve(response);
                 });
             return deferred.promise;

@@ -22,7 +22,7 @@ module.exports = function(app, userModel) {
 
 
     app.put('/api/assignment/user/:id', auth,              update);
-    app.put('/api/assignment/user/update/:username',auth,    updateUserByAdmin)
+    app.put('/api/assignment/user/updateUserByAdmin/:id',auth,    updateUserByAdmin)
     app.delete('/api/assignment/user/:id',auth,              deleteUserById);
 
     passport.use(new LocalStrategy(localStrategy));
@@ -247,7 +247,7 @@ module.exports = function(app, userModel) {
     }
 
     function updateUserByAdmin(req, res){
-        var username = req.params.username;
+        var username = req.params.id;
         var user = req.body;
         userModel
             .updateUserByAdmin(username, user)
@@ -263,9 +263,10 @@ module.exports = function(app, userModel) {
 
     function deleteUserById(req, res)
     {
-        var index = req.params.id;
+        var userId = req.params.id;
+        console.log('Delete user: '+userId)
         userModel
-            .deleteUserById(index)
+            .deleteUserById(userId)
             .then(
                 function (doc) {
                     res.json(doc);

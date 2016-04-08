@@ -7,20 +7,38 @@
         .module("FormBuilderApp")
         .controller("AdminController", adminController);
 
-    function adminController($scope, UserService) {
+    function adminController($scope, $rootScope, UserService) {
 
         function init(){
+            UserService
+                .getCurrentUser()
+                .then(function(user){
+                    if(user.data){
+                        console.log(user.data);
+                        $rootScope.currentUser = user.data;
+                        $scope.user = null;
+                    }else{
+                        $location.url("/login");
+                    }
+                });
+
             //find all the forms for user
             UserService
                 .findAllUsers()
                 .then(function(response){
                     $scope.users = response.data;
+                },
+                function(err){
+                    $scope.error = err;
                 });
         }
         init();
 
         $scope.addUser = function(user){
-            console.log('add user' + user.username);
+            if($scope.selectedUserId){
+                return;
+            }
+            console.log('add user: ' + user.username);
             //change roles to array
             var roleText = user.roles.toString();
             var roleArray = roleText.split(",");
@@ -31,8 +49,7 @@
         }
 
         $scope.updateUser = function(user){
-            var username = $scope.users[$scope.selectedUserIndex].username;
-            console.log('update user ' + username);
+            console.log('update user ' + user.username);
             var roleText = user.roles.toString();
             console.log(roleText);
             var roleArray = [];
@@ -41,22 +58,24 @@
             }
             user.roles = roleArray;
             UserService
-                .updateUserByAdmin(username, user)
+                .updateUserByAdmin($scope.selectedUserId, user)
                 .then(init);
         }
 
         $scope.deleteUser = function(user){
             console.log('admin '+ $scope.currentUser.username + ' is deleting user '+ user.username);
             UserService
-                .deleteUserById($scope.users.indexOf(user))
+                .deleteUserById(user._id)
                 .then(init);
         }
 
         $scope.selectUser = function(user, index){
-            $scope.selectedUserIndex = index;
+            $scope.selectedUserId = user._id;
             $scope.user = {
                 username: user.username,
                 password: user.password,
+                firstName: user.firstName,
+                lastName: user.lastName,
                 roles: user.roles
             };
         }

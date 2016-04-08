@@ -61,11 +61,11 @@
             return deferred.promise;
         }
 
-        function updateUserByAdmin(username, user)
+        function updateUserByAdmin(userId, user)
         {
             var deferred = $q.defer();
             $http
-                .put('/api/assignment/user/update/'+username, user)
+                .put('/api/assignment/user/updateUserByAdmin/'+userId, user)
                 .then(function(response){
                     deferred.resolve(response);
                 });
@@ -95,11 +95,11 @@
             return deferred.promise;
         }
 
-        function deleteUserById(index)
+        function deleteUserById(userId)
         {
             var deferred = $q.defer();
             $http
-                .delete('/api/assignment/user/'+index)
+                .delete('/api/assignment/user/'+userId)
                 .then(function(response){
                     deferred.resolve(response);
                 });

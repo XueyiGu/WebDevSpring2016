@@ -7,7 +7,7 @@
         .module("FormBuilderApp")
         .controller("FieldController", fieldController);
 
-    function fieldController($scope, $routeParams, FieldService, FormService) {
+    function fieldController($scope, $rootScope, $routeParams, FieldService, FormService, UserService) {
 
         //constant variables
         var formId = $routeParams.formId;
@@ -25,14 +25,29 @@
                         $scope.fields = response.data[0].fields;
                     }
                 });
-            FormService
-                .findAllFormsForUser($scope.currentUser._id)
-                .then(function(response){
-                    for(var u in response.data){
-                        console.log(response.data[u]._id);
+            var userId = null;
+            UserService
+                .getCurrentUser()
+                .then(function(user){
+                    if(user.data){
+                        console.log(user.data);
+                        $rootScope.currentUser = user.data;
+                        userId =  $rootScope.currentUser._id;
+                        //find all the forms for user
+                        FormService
+                            .findAllFormsForUser($scope.currentUser._id)
+                            .then(function(response){
+                                for(var u in response.data){
+                                    console.log(response.data[u]._id);
+                                }
+                                $scope.forms = response.data;
+                            })
+                    }else{
+                        $location.url("/login");
                     }
-                    $scope.forms = response.data;
-                })
+                });
+
+
         }
         init();
 
@@ -61,6 +76,14 @@
             console.log('add field for form ' + formId);
             var type = getFieldType(fieldType);
             var field = {"label":"New Field", "type": type, "placeholder": "","options" : null, "optionText":null};
+            var isOption = !(type === 'TEXT' || type === 'TEXTAREA' || type == 'DATE' || type == 'EMAIL');
+            if(isOption){
+                field.options = [
+                    {"label": "Option 1", "value": "OPTION_1"},
+                    {"label": "Option 2", "value": "OPTION_2"},
+                    {"label": "Option 3", "value": "OPTION_3"}
+                ];
+            }
             FieldService
                 .createFieldForForm(formId, field)
                 .then(init);
