@@ -3,13 +3,17 @@ var app = express();
 var bodyParser    = require('body-parser');
 var multer        = require('multer');
 var passport      = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var cookieParser  = require('cookie-parser');
 var session       = require('express-session');
 var mongoose      = require('mongoose');
 
+process.env.PASSPORT_SECRET = 'this is a secret';
+console.log("secret");
+console.log(process.env.PASSPORT_SECRET);
 
 app.use(session({
-    secret: 'this is the secret',
+    secret: process.env.PASSPORT_SECRET,
     resave: true,
     saveUninitialized: true
 }));
@@ -42,6 +46,6 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
 var db = mongoose.connect(connection_string);
 console.log(mongoose);
 
-require("./public/assignment/server/app.js")(app, mongoose, db);
+require("./public/assignment/server/app.js")(app, mongoose, db, passport, LocalStrategy);
 
 app.listen(port, ipaddress);

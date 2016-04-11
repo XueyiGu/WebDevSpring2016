@@ -16,9 +16,13 @@
                 .findUserByCredentials(user.username, user.password)
                 .then(
                     function(user){
-                        console.log(user);
-                        $rootScope.currentUser = user.data;
-                        $location.url("/profile");
+                        if(user){
+                            console.log(user);
+                            $rootScope.currentUser = user.data;
+                            $location.url("/profile");
+                        }else{
+                            $scope.message = 'Password does not match with your username';
+                        }
                     },
                     function(err) {
                         $scope.message = err;

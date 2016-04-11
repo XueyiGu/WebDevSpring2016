@@ -39,12 +39,16 @@
                 .then(
                     function(response){
                         if(response.data) {
+                            console.log(response.data);
                             $rootScope.currentUser = response.data;
                             $location.url("/profile");
                         }
+                        else{
+                            $scope.message = "User already exists";
+                        }
                     },
                     function(err) {
-                        $scope.error = err;
+                        $scope.message = err;
                     })
         }
     }

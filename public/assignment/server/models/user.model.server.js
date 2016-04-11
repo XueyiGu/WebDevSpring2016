@@ -7,6 +7,7 @@ module.exports = function(mongoose, db) {
 
     var api = {
         findUserByCredentials: findUserByCredentials,
+        findOne: findOne,
         createUser: createUser,
         findUserById: findUserById,
         findUserByName: findUserByName,
@@ -41,24 +42,24 @@ module.exports = function(mongoose, db) {
 
     function updateUser(userId, newUser)
     {
-        return userModel.update({_id: userId}, {$set: newUser});
-        //var deferred = q.defer();
-        //userModel.update({_id: userId}, {$set: newUser}, function(err, course) {
-        //    if(err){
-        //        deferred.reject(err);
-        //    }else{
-        //        userModel.find({_id: userId},function(err, user){
-        //            if(err){
-        //                deferred.reject(err);
-        //            }
-        //            else{
-        //                deferred.resolve(user);
-        //            }
-        //        });
-        //    }
-        //});
-        //
-        //return deferred.promise;
+        //return userModel.update({_id: userId}, {$set: newUser});
+        var deferred = q.defer();
+        userModel.update({_id: userId}, {$set: newUser}, function(err, user) {
+            if(err){
+                deferred.reject(err);
+            }else{
+                userModel.find({_id: userId},function(err, user){
+                    if(err){
+                        deferred.reject(err);
+                    }
+                    else{
+                        deferred.resolve(user);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
     }
 
     function updateUserByAdmin(userId, newUser){
@@ -152,4 +153,19 @@ module.exports = function(mongoose, db) {
         });
         return deferred.promise;
     }
+    function findOne(credentials) {
+        var deferred = q.defer();
+        userModel.findOne({username: credentials.username}, function(err, user){
+            if(err){
+                console.log(err);
+                deferred.reject(err);
+            }
+            else{
+                console.log('find one '+user);
+                deferred.resolve(user);
+            }
+        });
+        return deferred.promise;
+    }
+
 };
