@@ -14,6 +14,7 @@ module.exports = function(mongoose, db) {
         findUsersByIds: findUsersByIds,
         findAllUsers: findAllUsers,
         updateUser: updateUser,
+        updateUserByAdmin: updateUserByAdmin,
         deleteUserById: deleteUserById
     };
     return api;
@@ -59,6 +60,15 @@ module.exports = function(mongoose, db) {
         });
 
         return deferred.promise;
+    }
+
+    function updateUserByAdmin(userId, newUser){
+        return userModel.update({_id: userId},
+            {username: newUser.username,
+            password: newUser.password,
+            firstName: newUser.firstName,
+            lastName: newUser.lastName,
+            roles: newUser.roles});
     }
 
     function findAllUsers()

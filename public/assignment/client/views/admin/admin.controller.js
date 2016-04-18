@@ -9,6 +9,9 @@
 
     function adminController($scope, $rootScope, UserService) {
 
+        $scope.sortType     = 'user.username'; // set the default sort type
+        $scope.sortReverse  = false;  // set the default sort order
+
         function init(){
             UserService
                 .getCurrentUser()

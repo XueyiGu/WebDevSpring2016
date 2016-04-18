@@ -5,9 +5,8 @@
 module.exports = function(app, userModel, passport, LocalStrategy) {
 
     var bcrypt = require("bcrypt-nodejs");
-    var auth = authorized;
 
-    app.get('/api/assignment/user/findAllusers',auth,       findAllUsers);
+    app.get('/api/assignment/user/findAllusers',ensureAuthenticated,       findAllUsers);
     app.get('/api/assignment/user/:id',                 findUserById);
     app.get('/api/assignment/user/:username',           findUserByName);
 
@@ -15,12 +14,12 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
     app.get('/api/assignment/loggedin', loggedin);
     app.post('/api/assignment/logout', logout);
     app.post('/api/assignment/register',                   register); //create user
-    app.post('/api/assignment/user', auth, createUser),
+    app.post('/api/assignment/user', ensureAuthenticated, createUser),
 
 
-    app.put('/api/assignment/user/:id', auth,              update);
-    app.put('/api/assignment/user/updateUserByAdmin/:id',auth,    update)
-    app.delete('/api/assignment/user/:id',auth,              deleteUserById);
+    app.put('/api/assignment/user/:id', ensureAuthenticated,              update);
+    app.put('/api/assignment/user/updateUserByAdmin/:id',ensureAuthenticated,    updateUserByAdmin)
+    app.delete('/api/assignment/user/:id',ensureAuthenticated,              deleteUserById);
 
     passport.use(new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
@@ -63,11 +62,8 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
     }
 
     function ensureAuthenticated(req, res, next) {
-        if (req.isAuthenticated()) {
-            return next();
-        }else{
-            res.send(401);
-        }
+        if (req.isAuthenticated()) { return next(); }
+        res.redirect('/#/login');
     }
 
     function login(req, res) {
@@ -267,6 +263,21 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
                     )
             });
 
+    }
+
+    function updateUserByAdmin(req, res){
+        var username = req.params.id;
+        var user = req.body;
+        userModel
+            .updateUserByAdmin(username, user)
+            .then(
+                function (doc) {
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function deleteUserById(req, res)
