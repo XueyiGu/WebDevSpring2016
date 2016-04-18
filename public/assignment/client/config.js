@@ -8,10 +8,10 @@
         .config(function($routeProvider){
             $routeProvider
                 .when("/home", {
-                    templateUrl: "views/home/home.view.html"
-                    //resolve: {
-                    //    loggedin: checkCurrentUser
-                    //}
+                    templateUrl: "views/home/home.view.html",
+                    resolve: {
+                        loggedin: checkCurrentUser
+                    }
                 })
                 .when("/register", {
                     templateUrl: "views/users/register.view.html",
@@ -25,10 +25,10 @@
 
                 .when("/profile", {
                     templateUrl: "views/users/profile.view.html",
-                    controller: "ProfileController"
-                    //resolve: {
-                    //    loggedin: checkLoggedin
-                    //}
+                    controller: "ProfileController",
+                    resolve: {
+                        loggedin: checkLoggedin
+                    }
                 })
 
                 .when("/forms", {
@@ -43,10 +43,10 @@
 
                 .when("/admin", {
                     templateUrl: "views/admin/admin.view.html",
-                    controller: "AdminController"
-                    //resolve: {
-                    //    loggedin: checkAdmin
-                    //}
+                    controller: "AdminController",
+                    resolve: {
+                        loggedin: checkAdmin
+                    }
                 })
                 .otherwise({
                     redirectTo: "/home"

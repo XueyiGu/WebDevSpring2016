@@ -82,6 +82,8 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
             console.log('Get loggedin user');
             console.log(req.user);
             res.json(req.user);
+        }else{
+            res.json('0');
         }
     }
 
