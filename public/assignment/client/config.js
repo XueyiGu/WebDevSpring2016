@@ -80,27 +80,19 @@
     {
 
         var deferred = $q.defer();
-        console.log('I am here!');
-        //$http
-        //    .get('/api/assignment/loggedin')
-        //    .then(function(user){
-        //        console.log('I am here 1!');
-        //    });
+
         $http.get('/api/assignment/loggedin').success(function(user)
         {
-            console.log('I am here 2!');
             $rootScope.errorMessage = null;
             // User is Authenticated
             if (user !== '0')
             {
-                console.log('I am authenticated!');
                 $rootScope.currentUser = user;
                 deferred.resolve();
             }
             // User is Not Authenticated
             else
             {
-                console.log('I am not authenticated!');
                 $rootScope.errorMessage = 'You need to log in.';
                 deferred.reject();
                 $location.url('/login');
@@ -114,7 +106,6 @@
     {
         var deferred = $q.defer();
 
-        console.log('I am in checkCurrentUser');
         $http.get('/api/assignment/loggedin').success(function(user)
         {
             $rootScope.errorMessage = null;

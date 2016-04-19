@@ -5,8 +5,24 @@
     "use strict";
     angular
         .module("PriceMatchApp")
-        .controller("HomeController", function($scope, $routeParams, $location, UserServices){
-            var users = UserServices.findAllUsers();
-            console.log("return all users!");
-        });
+        .controller("HomeController", homeController);
+
+    function homeController(RestaurantService) {
+        var vm = this;
+
+        vm.search = search;
+
+        function init() {
+
+        }
+        init();
+
+        function search(movie) {
+            OmdbService
+                .searchMovieByTitle(movie.title)
+                .then(function(response){
+                    vm.data = response.data;
+                });
+        }
+    }
 })();

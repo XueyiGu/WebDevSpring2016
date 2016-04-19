@@ -8,9 +8,9 @@ var cookieParser  = require('cookie-parser');
 var session       = require('express-session');
 var mongoose      = require('mongoose');
 
+//console.log(process.env.SECRET);
+
 process.env.PASSPORT_SECRET = 'this is a secret';
-console.log("secret");
-console.log(process.env.PASSPORT_SECRET);
 
 app.use(session({
     secret: process.env.PASSPORT_SECRET,
@@ -47,5 +47,28 @@ var db = mongoose.connect(connection_string);
 console.log(mongoose);
 
 require("./public/assignment/server/app.js")(app, mongoose, db, passport, LocalStrategy);
+
+//project
+
+// Request API access: http://www.yelp.com/developers/getting_started/api_access
+var Yelp = require('yelp');
+
+var yelp = new Yelp({
+    consumer_key: '3f9JGN7LavtyadBI2xDN2g',
+    consumer_secret: 'NB2z7FX6lVzmUh-rJ6zZGJt3i4c',
+    token: 'EaAFObDQnbWIVrmgeQ1Fh6h3Trk9mt-I',
+    token_secret: 'nqziy8fbib4_31d9sGH7EgvfVU4',
+});
+require("./public/project/server/app.js")(app, yelp);
+
+//yelp.search({ term: 'food', location: 'Seattle' })
+    //.then(function (data) {
+    //    console.log(data);
+    //})
+    //.catch(function (err) {
+    //    console.error(err);
+    //});
+
+
 
 app.listen(port, ipaddress);

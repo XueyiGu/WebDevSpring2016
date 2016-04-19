@@ -15,11 +15,11 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
     app.get('/api/assignment/loggedin', loggedin);
     app.post('/api/assignment/logout', logout);
     app.post('/api/assignment/register',                   register); //create user
-    app.post('/api/assignment/user', auth, createUser),
+    app.post('/api/assignment/user', auth, createUser);
 
 
     app.put('/api/assignment/user/:id', auth,              update);
-    app.put('/api/assignment/user/updateUserByAdmin/:id',auth,    update)
+    app.put('/api/assignment/user/updateUserByAdmin/:id',auth,    update);
     app.delete('/api/assignment/user/:id',auth,              deleteUserById);
 
     passport.use(new LocalStrategy(localStrategy));

@@ -1,0 +1,166 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Search</h1>
+            <div ng-if="message" class="alert alert-danger">
+                {{message}}
+            </div>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="restaurantname" class="col-sm-2 control-label">Find</label>
+                    <div class="col-sm-10">
+                        <input ng-model="restaurant.name" type="text" class="form-control" id="restaurantname" placeholder="Restaurant Name, Max's">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="location" class="col-sm-2 control-label">Near</label>
+                    <div class="col-sm-10">
+                        <input ng-model="restaurant.location" type="text" class="form-control" id="location" placeholder="Seattle, WA">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button ng-click="search(restaurant)" class="btn btn-primary btn-block">Search</button>
+                    </div>
+                </div>
+            </form>
+            <div ng-if="model.data">
+                <h3>Search Results</h3>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Poster</th>
+                        <th>Title</th>
+                        <th>IMDB</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="movie in model.data.Search">
+                        <td>
+                            <img ng-src="{{movie.Poster}}"
+                                 height="100px"/>
+                        </td>
+                        <td>
+                            <a href="#/details/{{movie.imdbID}}">
+                                {{movie.Title}}
+                            </a>
+                        </td>
+                        <td>{{movie.imdbID}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<li class="regular-search-result">
+    <div class="search-result natural-search-result" data-key="1" data-component-bound="true">
+        <div class="biz-listing-large">
+            <div class="main-attributes">
+                <div class="media-block media-block--12">
+                    <div class="media-avatar">
+                        <div class="photo-box pb-90s">
+                            <a href="/biz/hotel-max-seattle">
+                                <img alt="Hotel Max" class="photo-box-img" height="90" src="//s3-media3.fl.yelpcdn.com/bphoto/efcmm1uT2CtYq8ucH9Z4sw/90s.jpg" width="90">
+
+                            </a>
+
+                        </div>
+
+
+
+
+                    </div>
+                    <div class="media-story">
+                        <h3 class="search-result-title">
+                                        <span class="indexed-biz-name">1.         <a class="biz-name js-analytics-click" data-analytics-label="biz-name" href="/biz/hotel-max-seattle" data-hovercard-id="uDW1PAOdFvMn7vlZeXCGkg"><span>Hotel <span class="highlighted">Max</span></span></a>
+</span>
+
+
+                        </h3>
+
+                        <div class="biz-rating biz-rating-large clearfix">
+
+                            <div class="rating-large">
+                                <i class="star-img stars_3_half" title="3.5 star rating">
+                                    <img class="offscreen" height="303" src="//s3-media4.fl.yelpcdn.com/assets/srv0/yelp_styleguide/c2252a4cd43e/assets/img/stars/stars_map.png" width="84" alt="3.5 star rating">
+                                </i>
+                            </div>
+
+
+                <span class="review-count rating-qualifier">
+            474 reviews
+    </span>
+
+                        </div>
+
+
+                        <div class="price-category">
+                <span class="bullet-after">
+
+        <span class="business-attribute price-range">$$</span>
+        </span>
+            <span class="category-str-list">
+                    <a href="/search?find_desc=Max%27s&amp;find_loc=Seattle%2C+WA&amp;cflt=hotels">Hotels</a>
+    </span>
+
+
+                        </div>
+
+
+                        <ul class="search-result_tags">
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="secondary-attributes">
+                                <span class="neighborhood-str-list">
+            Denny Triangle        </span>
+
+                <address>
+                    620 Stewart St<br>Seattle, WA 98101
+                </address>
+
+
+
+                <span class="offscreen">Phone number</span>
+    <span class="biz-phone">
+        (877) 628-4425
+    </span>
+
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="snippet-block media-block">
+            <div class="media-avatar">
+                <div class="photo-box pb-30s" data-hovercard-id="W3_0hunLCuZmZKIQ-9KUZw">
+                    <a href="/user_details?userid=RaX6ByaVSm0hkaS8LmjknQ">
+                        <img alt="Kyle W." class="photo-box-img" height="30" src="//s3-media4.fl.yelpcdn.com/photo/T19o5EVYDfUY8yDFgmqaCg/30s.jpg" width="30">
+
+                    </a>
+
+                </div>
+
+            </div>
+            <div class="media-story">
+                <p class="snippet">
+                    I've never hugged a hotel employee before. I've been tempted to slap them before, but Hotel Max is the only hotel where I've felt the need to hug someone because they went above and…
+                    <a href="/biz/hotel-max-seattle?hrid=DFsF8PP7PRmppout9yWq-A" class="nowrap">read more</a>
+                </p>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</li>
