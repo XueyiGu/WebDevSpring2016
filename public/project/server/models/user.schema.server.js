@@ -2,6 +2,7 @@
  * Created by ceres on 4/1/16.
  */
 module.exports = function(mongoose) {
+    var commentSchema = require("./comment.schema.server.js")(mongoose);
     var UserSchema = mongoose.Schema({
         "username" : String,
         "password": String,
@@ -9,8 +10,9 @@ module.exports = function(mongoose) {
         "lastName" : String,
         "emails" : [String],
         "phones" : [String],
-        roles: [String]
-    }, {collection: "user"});
+        "roles": [String],
+        "comments":[commentSchema]
+    }, {collection: "project.user"});
 
     return UserSchema;
 };

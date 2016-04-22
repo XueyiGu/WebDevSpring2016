@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Detail</h1>
+            <div ng-if="message" class="alert alert-danger">
+                {{message}}
+            </div>
+            <div>
+                <div class="row">
+                    <div>
+                        <div class="col-sm-9">
+                            <div class="col-sm-3">
+                                <a href="#/restaurant/{{restaurant.id}}">
+                                    <img class="img-responsive" ng-src="{{restaurant.image_url}}" alt="Couldn't show the image">
+                                </a>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4><a href="#/restaurant/{{restaurant.id}}">{{restaurant.name}}</a></h4>
+                                <div>
+                                    <img ng-src="{{restaurant.rating_img_url_large}}" alt="Image test">
+                                    <p>{{restaurant.review_count}} reviews</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <h4>{{restaurant.location.neighborhoods[0]}}</h4>
+                            <div ng-repeat="address in restaurant.location.display_address">
+                                <p>{{address}}</p>
+                            </div>
+                            <p>{{restaurant.display_phone}}</p>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <p>{{restaurant.snippet_text}}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

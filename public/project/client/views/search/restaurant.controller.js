@@ -1,11 +1,11 @@
 /**
- * Created by ceres on 4/18/16.
+ * Created by ceres on 4/20/16.
  */
 var app = angular.module("PriceMatchApp");
-app.controller("SearchController", searchController);
+app.controller("RestaurantController", restaurantController);
 
 
-function searchController($scope, $rootScope, RestaurantService) {
+function restaurantController($scope, $rootScope, RestaurantService) {
 
     var vm = this;
 

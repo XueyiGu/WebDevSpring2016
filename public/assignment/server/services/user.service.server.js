@@ -11,7 +11,7 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
     app.get('/api/assignment/user/:id',                 findUserById);
     app.get('/api/assignment/user/:username',           findUserByName);
 
-    app.post('/api/assignment/user', passport.authenticate('local'),login);
+    app.post('/api/assignment/login', passport.authenticate('local'),login);
     app.get('/api/assignment/loggedin', loggedin);
     app.post('/api/assignment/logout', logout);
     app.post('/api/assignment/register',                   register); //create user
@@ -66,7 +66,7 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
         if (req.isAuthenticated()) {
             return next();
         }else{
-            res.send(401);
+            res.send(401).send(err);
         }
     }
 

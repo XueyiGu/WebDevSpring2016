@@ -34,6 +34,10 @@
                     templateUrl: "views/search/search.view.html",
                     controller: "SearchController"
                 })
+                .when("/restaurant/:restaurantId", {
+                    templateUrl: "views/search/restaurant.view.html",
+                    controller: "RestaurantController"
+                })
                 .otherwise({
                     redirectTo: "/home"
                 });

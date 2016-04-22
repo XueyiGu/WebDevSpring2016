@@ -3,7 +3,7 @@ var q = require("q");
 module.exports = function(mongoose, db) {
 
     var UserSchema = require('./user.schema.server.js')(mongoose);
-    var userModel = mongoose.model("userModel", UserSchema);
+    var userModel = mongoose.model("projectUserModel", UserSchema);
 
     var api = {
         findUserByCredentials: findUserByCredentials,

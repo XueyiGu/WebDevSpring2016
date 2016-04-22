@@ -20,6 +20,7 @@
                         console.log(user.data);
                         $rootScope.currentUser = user.data;
                         userId =  $rootScope.currentUser._id;
+                        console.log('userId: '+userId);
                         //find all the forms for user
                         FormService
                             .findAllFormsForUser(userId)

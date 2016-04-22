@@ -25,7 +25,7 @@
                         }
                     },
                     function(err) {
-                        $scope.message = err;
+                        $scope.message = 'Password does not match with your Username';
                     });
         }
     }

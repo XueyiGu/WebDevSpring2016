@@ -34,18 +34,24 @@
                 .post('/api/assignment/register', user)
                 .then(function(response){
                     deferred.resolve(response);
-                });
+                },
+                    function(err){
+                        deferred.reject(err);
+                    });
             return deferred.promise;
         }
 
         function findUserByCredentials(username, password)
         {
             var deferred = $q.defer();
+            var user = {'username': username, 'password': password};
             $http
-                .post('/api/assignment/user?username='+ username + '&password='+ password)
+                .post('/api/assignment/login', user)
                 .then(function(user){
-                    console.log('user.service.client: '+user);
                     deferred.resolve(user);
+                },
+                function(err){
+                    deferred.reject(err);
                 });
             return deferred.promise;
         }
@@ -57,7 +63,10 @@
                 .put('/api/assignment/user/' + userId, currentUser)
                 .then(function(response){
                     deferred.resolve(response);
-                });
+                },
+                    function(err){
+                        deferred.reject(err);
+                    });
             return deferred.promise;
         }
 
@@ -68,7 +77,10 @@
                 .put('/api/assignment/user/updateUserByAdmin/'+userId, user)
                 .then(function(response){
                     deferred.resolve(response);
-                });
+                },
+                    function(err){
+                        deferred.reject(err);
+                    });
             return deferred.promise;
         }
 
@@ -79,7 +91,10 @@
                 .get('/api/assignment/user/findAllUsers')
                 .then(function(response){
                     deferred.resolve(response);
-                });
+                },
+                    function(err){
+                        deferred.reject(err);
+                    });
             return deferred.promise;
         }
 
@@ -91,7 +106,10 @@
                 .get('/api/assignment/user?username=' + username)
                 .then(function(response){
                     deferred.resolve(response);
-                });
+                },
+                    function(err){
+                        deferred.reject(err);
+                    });
             return deferred.promise;
         }
 
@@ -102,7 +120,10 @@
                 .delete('/api/assignment/user/'+userId)
                 .then(function(response){
                     deferred.resolve(response);
-                });
+                },
+                    function(err){
+                        deferred.reject(err);
+                    });
             return deferred.promise;
         }
 
@@ -113,7 +134,10 @@
                 .get('/api/assignment/loggedin')
                 .then(function(user){
                     deferred.resolve(user);
-                });
+                },
+                    function(err){
+                        deferred.reject(err);
+                    });
             return deferred.promise;
         }
 

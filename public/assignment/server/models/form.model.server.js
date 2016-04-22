@@ -43,7 +43,7 @@ module.exports = function(mongoose, db) {
                 deferred.reject(err);
                 console.error(err);
             }else{
-                console.log('return the result of findFormByUserId:');
+                console.log('return the result of findFormByUserId:' + userId);
                 console.log(forms);
                 deferred.resolve(forms);
             }

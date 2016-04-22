@@ -6,60 +6,60 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
 
     var bcrypt = require("bcrypt-nodejs");
 
-    app.get('/api/assignment/user/findAllusers',ensureAuthenticated,       findAllUsers);
-    app.get('/api/assignment/user/:id',                 findUserById);
-    app.get('/api/assignment/user/:username',           findUserByName);
+    app.get('/api/project/user/findAllusers',ensureAuthenticated,       findAllUsers);
+    app.get('/api/project/user/:id',                 findUserById);
+    app.get('/api/project/user/:username',           findUserByName);
 
-    app.post('/api/assignment/user', passport.authenticate('local'),login);
-    app.get('/api/assignment/loggedin', loggedin);
-    app.post('/api/assignment/logout', logout);
-    app.post('/api/assignment/register',                   register); //create user
-    app.post('/api/assignment/user', ensureAuthenticated, createUser),
+    app.post('/api/project/user', passport.authenticate('local'),login);
+    app.get('/api/project/loggedin', loggedin);
+    app.post('/api/project/logout', logout);
+    app.post('/api/project/register',                   register); //create user
+    app.post('/api/project/user', ensureAuthenticated, createUser),
 
 
-    app.put('/api/assignment/user/:id', ensureAuthenticated,              update);
-    app.put('/api/assignment/user/updateUserByAdmin/:id',ensureAuthenticated,    updateUserByAdmin)
-    app.delete('/api/assignment/user/:id',ensureAuthenticated,              deleteUserById);
+    app.put('/api/project/user/:id', ensureAuthenticated,              update);
+    app.put('/api/project/user/updateUserByAdmin/:id',ensureAuthenticated,    updateUserByAdmin)
+    app.delete('/api/project/user/:id',ensureAuthenticated,              deleteUserById);
 
-    passport.use(new LocalStrategy(localStrategy));
-    passport.serializeUser(serializeUser);
-    passport.deserializeUser(deserializeUser);
+    //passport.use(new LocalStrategy(localStrategy));
+    //passport.serializeUser(serializeUser);
+    //passport.deserializeUser(deserializeUser);
 
-    function localStrategy(username, password, done) {
-        userModel
-            .findOne({username: username})
-            .then(
-                function(user) {
-                    if (user == null) {
-                        return done(null, false);
-                    }else if(bcrypt.compareSync(password, user.password) || password == user.password) {
-                        return done(null, user);
-                    }else {
-                        return done(null, false);
-                    }
-                },
-                function(err) {
-                    if (err) { return done(err); }
-                }
-            );
-    }
-
-    function serializeUser(user, done) {
-        done(null, user);
-    }
-
-    function deserializeUser(user, done) {
-        userModel
-            .findUserById(user._id)
-            .then(
-                function(user){
-                    done(null, user);
-                },
-                function(err){
-                    done(err, null);
-                }
-            );
-    }
+    //function localStrategy(username, password, done) {
+    //    userModel
+    //        .findOne({username: username})
+    //        .then(
+    //            function(user) {
+    //                if (user == null) {
+    //                    return done(null, false);
+    //                }else if(bcrypt.compareSync(password, user.password) || password == user.password) {
+    //                    return done(null, user);
+    //                }else {
+    //                    return done(null, false);
+    //                }
+    //            },
+    //            function(err) {
+    //                if (err) { return done(err); }
+    //            }
+    //        );
+    //}
+    //
+    //function serializeUser(user, done) {
+    //    done(null, user);
+    //}
+    //
+    //function deserializeUser(user, done) {
+    //    userModel
+    //        .findUserById(user._id)
+    //        .then(
+    //            function(user){
+    //                done(null, user);
+    //            },
+    //            function(err){
+    //                done(err, null);
+    //            }
+    //        );
+    //}
 
     function ensureAuthenticated(req, res, next) {
         if (req.isAuthenticated()) { return next(); }

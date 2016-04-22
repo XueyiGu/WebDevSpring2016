@@ -59,16 +59,6 @@ var yelp = new Yelp({
     token: 'EaAFObDQnbWIVrmgeQ1Fh6h3Trk9mt-I',
     token_secret: 'nqziy8fbib4_31d9sGH7EgvfVU4',
 });
-require("./public/project/server/app.js")(app, yelp);
-
-//yelp.search({ term: 'food', location: 'Seattle' })
-    //.then(function (data) {
-    //    console.log(data);
-    //})
-    //.catch(function (err) {
-    //    console.error(err);
-    //});
-
-
+require("./public/project/server/app.js")(app, yelp, mongoose, db, passport, LocalStrategy);
 
 app.listen(port, ipaddress);

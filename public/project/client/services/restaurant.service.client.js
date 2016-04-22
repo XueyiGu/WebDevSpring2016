@@ -11,7 +11,8 @@
     function RestaurantService($http, $rootScope, $q)
     {
         var api = {
-            search: search
+            search: search,
+            restaurantDetail: restaurantDetail
         };
 
         return api;
@@ -26,104 +27,15 @@
             return deferred.promise;
         }
 
-        function createUser(user)
-        {
-            //creates a Defered Object which represents a task which will finish in the future
+        function restaurantDetail(restaurantId){
             var deferred = $q.defer();
             $http
-                .post('/api/assignment/register', user)
+                .post('api/project/restaurant/detail', restaurantId)
                 .then(function(response){
-                    deferred.resolve(response);
+                    deferred.resolve(response)
                 });
             return deferred.promise;
         }
 
-        function findUserByCredentials(username, password)
-        {
-            var deferred = $q.defer();
-            $http
-                .post('/api/assignment/user?username='+ username + '&password='+ password)
-                .then(function(user){
-                    console.log('user.service.client: '+user);
-                    deferred.resolve(user);
-                });
-            return deferred.promise;
-        }
-
-        function updateUser(userId, currentUser)
-        {
-            var deferred = $q.defer();
-            $http
-                .put('/api/assignment/user/' + userId, currentUser)
-                .then(function(response){
-                    deferred.resolve(response);
-                });
-            return deferred.promise;
-        }
-
-        function updateUserByAdmin(userId, user)
-        {
-            var deferred = $q.defer();
-            $http
-                .put('/api/assignment/user/updateUserByAdmin/'+userId, user)
-                .then(function(response){
-                    deferred.resolve(response);
-                });
-            return deferred.promise;
-        }
-
-        function findAllUsers()
-        {
-            var deferred = $q.defer();
-            $http
-                .get('/api/assignment/user/findAllUsers')
-                .then(function(response){
-                    deferred.resolve(response);
-                });
-            return deferred.promise;
-        }
-
-
-        function findUserByUsername(username)
-        {
-            var deferred = $q.defer();
-            $http
-                .get('/api/assignment/user?username=' + username)
-                .then(function(response){
-                    deferred.resolve(response);
-                });
-            return deferred.promise;
-        }
-
-        function deleteUserById(userId)
-        {
-            var deferred = $q.defer();
-            $http
-                .delete('/api/assignment/user/'+userId)
-                .then(function(response){
-                    deferred.resolve(response);
-                });
-            return deferred.promise;
-        }
-
-        function getCurrentUser()
-        {
-            var deferred = $q.defer();
-            $http
-                .get('/api/assignment/loggedin')
-                .then(function(user){
-                    deferred.resolve(user);
-                });
-            return deferred.promise;
-        }
-
-        function logout(){
-            var deferred = $q.defer();
-            $http.post('/api/assignment/logout')
-                .then(function(response){
-                    deferred.resolve(response);
-                });
-            return deferred.promise;
-        }
     }
 })();
