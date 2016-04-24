@@ -46,7 +46,7 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
 var db = mongoose.connect(connection_string);
 console.log(mongoose);
 
-//require("./public/assignment/server/app.js")(app, mongoose, db, passport, LocalStrategy);
+require("./public/assignment/server/app.js")(app, mongoose, db, passport, LocalStrategy);
 
 //project
 
@@ -60,6 +60,6 @@ var yelp = new Yelp({
     token_secret: 'nqziy8fbib4_31d9sGH7EgvfVU4',
 });
 
-require("./public/project/server/app.js")(app, yelp, mongoose, db, passport, LocalStrategy);
+//require("./public/project/server/app.js")(app, yelp, mongoose, db, passport, LocalStrategy);
 
 app.listen(port, ipaddress);

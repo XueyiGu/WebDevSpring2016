@@ -11,7 +11,7 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
     app.get('/api/project/user/:id',                 findUserById);
     app.get('/api/project/user/:username',           findUserByName);
 
-    app.post('/api/project/user',passport.authenticate('local'),login);
+    //app.post('/api/project/user',passport.authenticate('local'),login);
     app.get('/api/project/loggedin', loggedin);
     app.post('/api/project/logout', logout);
     app.post('/api/project/register',                   register); //create user
@@ -25,28 +25,28 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
     app.post('/api/project/user/addComment', addComment);
     app.post('/api/project/user/addMenu', addMenu);
 
-    passport.use(new LocalStrategy(localStrategy));
-    passport.serializeUser(serializeUser);
-    passport.deserializeUser(deserializeUser);
-
-    function localStrategy(username, password, done) {
-        userModel
-            .findOne({username: username})
-            .then(
-                function(user) {
-                    if (user == null) {
-                        return done(null, false);
-                    }else if(bcrypt.compareSync(password, user.password) || password == user.password) {
-                        return done(null, user);
-                    }else {
-                        return done(null, false);
-                    }
-                },
-                function(err) {
-                    if (err) { return done(err); }
-                }
-            );
-    }
+    //passport.use(new LocalStrategy(localStrategy));
+    //passport.serializeUser(serializeUser);
+    //passport.deserializeUser(deserializeUser);
+    //
+    //function localStrategy(username, password, done) {
+    //    userModel
+    //        .findOne({username: username})
+    //        .then(
+    //            function(user) {
+    //                if (user == null) {
+    //                    return done(null, false);
+    //                }else if(bcrypt.compareSync(password, user.password) || password == user.password) {
+    //                    return done(null, user);
+    //                }else {
+    //                    return done(null, false);
+    //                }
+    //            },
+    //            function(err) {
+    //                if (err) { return done(err); }
+    //            }
+    //        );
+    //}
 
     function serializeUser(user, done) {
         done(null, user);
