@@ -12,6 +12,8 @@ function searchController($scope, $rootScope, RestaurantService) {
     $scope.search = search;
 
     function init() {
+        $scope.restaurant = {'name': 'Starbucks', 'location': 'Seattle'};
+        search($scope.restaurant);
     }
     init();
 
@@ -22,7 +24,7 @@ function searchController($scope, $rootScope, RestaurantService) {
                 function(response){
                     if(response){
                         $scope.restaurants = response.data;
-                        console.log(response.data);
+                        $rootScope.restaurants = response.data;
                     }
                 },
                 function(err) {

@@ -59,14 +59,14 @@
 
         $http.get('/api/assignment/loggedin').success(function(user)
         {
-            $rootScope.errorMessage = null;
+            $rootScope.message = null;
             // User is Authenticated
             if (user !== '0' && user.roles.indexOf('admin') != -1)
             {
                 $rootScope.currentUser = user;
                 deferred.resolve();
             }else {
-                $rootScope.errorMessage = 'You need to log in.';
+                $rootScope.message = 'You need to log in.';
                 deferred.reject();
                 $location.url('/login');
             }
@@ -83,7 +83,7 @@
 
         $http.get('/api/assignment/loggedin').success(function(user)
         {
-            $rootScope.errorMessage = null;
+            $rootScope.message = null;
             // User is Authenticated
             if (user !== '0')
             {
@@ -93,7 +93,7 @@
             // User is Not Authenticated
             else
             {
-                $rootScope.errorMessage = 'You need to log in.';
+                $rootScope.message = 'You need to log in.';
                 deferred.reject();
                 $location.url('/login');
             }
@@ -108,7 +108,7 @@
 
         $http.get('/api/assignment/loggedin').success(function(user)
         {
-            $rootScope.errorMessage = null;
+            $rootScope.message = null;
             // User is Authenticated
             if (user !== '0')
             {

@@ -9,11 +9,16 @@ module.exports = function(mongoose) {
         "name": String,
         "image_url" : String,
         "rating_img_url_large" : String,
-        "review_count" : [String],
-        "comments" : [commentSchema],
+        "review_count" : String,
         "menus": [menuSchema],
         "comments":[commentSchema],
-        "user_id": String
+        "snippet_text": String,
+        "location": {
+                "address": [String],
+                "city": String,
+                "display_address": [String],
+                "neighborhoods":[String]}
+
     }, {collection: "project.restaurant"});
 
     return RestaurantSchema;

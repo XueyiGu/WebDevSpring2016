@@ -4,7 +4,10 @@
 module.exports = function(app, yelp, restaurantModel) {
 
     app.post('/api/project/restaurant/search', search);
-    app.post('api/project/restaurant/detail', restaurantDetail)
+    app.get('/api/project/restaurant/detail/:restaurantId', restaurantDetail);
+    app.put('/api/project/restaurant/createRestaurant', createRestaurant);
+    app.put('/api/project/restaurant/:restaurantId/addMenu', addMenu);
+    app.post('/api/project/restaurant/addComment', addComment);
 
     function search(req, res)
     {
@@ -21,23 +24,56 @@ module.exports = function(app, yelp, restaurantModel) {
     }
 
     function restaurantDetail(req, res){
-        var restaurantId = req.body;
+        var id = req.params.restaurantId;
         restaurantModel
-            .searchRestaurantById(restaurantId)
+            .searchRestaurantById(id)
             .then(
                 function(restaurant){
-                    //if this restaurant exists in our database, just show all the information
-                    if(restaurant){
-                        res.json(restaurant);
-                    }
-                    //if not, search this restaurant through yelp API
-                    else{
-
-                    }
+                    res.json(restaurant);
                 },
                 function(err){
+                    res.status(400).send(err);
+                });
+    }
 
-                }
-            )
+    function createRestaurant(req, res){
+        var restaurant = req.body;
+        restaurantModel
+            .createRestaurant(restaurant)
+            .then(
+                function(restaurant){
+                    //at the same time, we need to add the
+                    res.json(restaurant);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
+    }
+
+    function addMenu(req, res){
+        var id = req.params.restaurantId;
+        var menu = req.body;
+        restaurantModel
+            .updateMenu(id, menu)
+            .then(
+                function(restuarant){
+                    res.json(restuarant);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
+    }
+
+    function addComment(req, res){
+        var comment = req.body;
+        restaurantModel
+            .updateComment(comment.restaurant_id, comment)
+            .then(
+                function(restuarant){
+                    res.json(restuarant);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
     }
 }

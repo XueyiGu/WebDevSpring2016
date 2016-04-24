@@ -53,7 +53,6 @@ module.exports = function(mongoose, db) {
                 }
             }
         );
-
         return deferred.promise;
     }
 

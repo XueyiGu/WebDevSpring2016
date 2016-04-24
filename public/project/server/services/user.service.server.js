@@ -5,61 +5,65 @@
 module.exports = function(app, userModel, passport, LocalStrategy) {
 
     var bcrypt = require("bcrypt-nodejs");
+    var auth = authorized;
 
-    app.get('/api/project/user/findAllusers',ensureAuthenticated,       findAllUsers);
+    app.get('/api/project/user/findAllusers', auth,      findAllUsers);
     app.get('/api/project/user/:id',                 findUserById);
     app.get('/api/project/user/:username',           findUserByName);
 
-    app.post('/api/project/user', passport.authenticate('local'),login);
+    app.post('/api/project/user',passport.authenticate('local'),login);
     app.get('/api/project/loggedin', loggedin);
     app.post('/api/project/logout', logout);
     app.post('/api/project/register',                   register); //create user
-    app.post('/api/project/user', ensureAuthenticated, createUser),
+    app.post('/api/project/user', auth, createUser),
 
 
-    app.put('/api/project/user/:id', ensureAuthenticated,              update);
-    app.put('/api/project/user/updateUserByAdmin/:id',ensureAuthenticated,    updateUserByAdmin)
-    app.delete('/api/project/user/:id',ensureAuthenticated,              deleteUserById);
+    app.put('/api/project/user/:id', auth,             update);
+    app.put('/api/project/user/updateUserByAdmin/:id', auth,   updateUserByAdmin)
+    app.delete('/api/project/user/:id',  auth,            deleteUserById);
 
-    //passport.use(new LocalStrategy(localStrategy));
-    //passport.serializeUser(serializeUser);
-    //passport.deserializeUser(deserializeUser);
+    app.post('/api/project/user/addComment', addComment);
+    app.post('/api/project/user/addMenu', addMenu);
 
-    //function localStrategy(username, password, done) {
-    //    userModel
-    //        .findOne({username: username})
-    //        .then(
-    //            function(user) {
-    //                if (user == null) {
-    //                    return done(null, false);
-    //                }else if(bcrypt.compareSync(password, user.password) || password == user.password) {
-    //                    return done(null, user);
-    //                }else {
-    //                    return done(null, false);
-    //                }
-    //            },
-    //            function(err) {
-    //                if (err) { return done(err); }
-    //            }
-    //        );
-    //}
-    //
-    //function serializeUser(user, done) {
-    //    done(null, user);
-    //}
-    //
-    //function deserializeUser(user, done) {
-    //    userModel
-    //        .findUserById(user._id)
-    //        .then(
-    //            function(user){
-    //                done(null, user);
-    //            },
-    //            function(err){
-    //                done(err, null);
-    //            }
-    //        );
-    //}
+    passport.use(new LocalStrategy(localStrategy));
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+
+    function localStrategy(username, password, done) {
+        userModel
+            .findOne({username: username})
+            .then(
+                function(user) {
+                    if (user == null) {
+                        return done(null, false);
+                    }else if(bcrypt.compareSync(password, user.password) || password == user.password) {
+                        return done(null, user);
+                    }else {
+                        return done(null, false);
+                    }
+                },
+                function(err) {
+                    if (err) { return done(err); }
+                }
+            );
+    }
+
+    function serializeUser(user, done) {
+        done(null, user);
+    }
+
+    function deserializeUser(user, done) {
+        userModel
+            .findUserById(user._id)
+            .then(
+                function(user){
+                    done(null, user);
+                },
+                function(err){
+                    done(err, null);
+                }
+            );
+    }
 
     function ensureAuthenticated(req, res, next) {
         if (req.isAuthenticated()) { return next(); }
@@ -78,6 +82,8 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
             console.log('Get loggedin user');
             console.log(req.user);
             res.json(req.user);
+        }else{
+            res.json('0');
         }
     }
 
@@ -88,7 +94,7 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
 
     function register(req, res) {
         var newUser = req.body;
-        newUser.roles = ['student'];
+        newUser.roles = ['customer'];
 
         userModel
             .findUserByName(newUser.username)
@@ -123,6 +129,7 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
                 }
             );
 
+
     }
 
     function createUser(req, res) {
@@ -130,7 +137,7 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
         if(newUser.roles && newUser.roles.length > 1) {
             newUser.roles = newUser.roles.split(",");
         } else {
-            newUser.roles = ["student"];
+            newUser.roles = ["customer"];
         }
 
         // first check if a user already exists with the username
@@ -294,5 +301,31 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
                     res.status(400).send(err);
                 }
             );
+    }
+
+    function addMenu(req, res){
+        var menu = req.body;
+        var username = menu.username;
+        userModel
+            .addMenu(username, menu)
+            .then(function(doc){
+                res.json(doc);
+            },
+            function(err){
+                res.status(400).send(err);
+            });
+    }
+
+    function addComment(req, res){
+        var comment = req.body;
+        var username = comment.username;
+        userModel
+            .addComment(username, comment)
+            .then(function(doc){
+                    res.json(doc);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
     }
 }

@@ -3,6 +3,7 @@
  */
 module.exports = function(mongoose) {
     var commentSchema = require("./comment.schema.server.js")(mongoose);
+    var menuSchema = require("./menu.schema.server.js")(mongoose);
     var UserSchema = mongoose.Schema({
         "username" : String,
         "password": String,
@@ -11,7 +12,8 @@ module.exports = function(mongoose) {
         "emails" : [String],
         "phones" : [String],
         "roles": [String],
-        "comments":[commentSchema]
+        "comments":[commentSchema],
+        "menus": [menuSchema]
     }, {collection: "project.user"});
 
     return UserSchema;

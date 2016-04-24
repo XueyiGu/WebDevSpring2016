@@ -6,7 +6,9 @@ module.exports = function(mongoose) {
         "name" : String,
         "price": {type: Number, default: 0.0},
         "display": {type: Boolean, default: true},
-        "created" : {type: Date, default: Date.now()}
+        "created" : {type: Date, default: Date.now()},
+        "restaurant_id": String,
+        "username": String
     }, {collection: "project.menu"});
 
     return MenuSchema;

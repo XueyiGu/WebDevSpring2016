@@ -9,17 +9,16 @@ module.exports = function(mongoose, db) {
     var restaurantModel = mongoose.model("projectRestaurantModel", RestaurantSchema);
 
     var api = {
-        findRestaurantById: findRestaurantById,
+        searchRestaurantById: searchRestaurantById,
         createRestaurant: createRestaurant,
         updateComment: updateComment,
         updateMenu: updateMenu
     };
     return api;
 
-    function findRestaurantById(restaurantId)
-    {
+    function searchRestaurantById(restaurantId) {
         var deferred = q.defer();
-        restaurantModel.find({id: restaurantId},function(err, restaurant){
+        restaurantModel.find({'id': restaurantId},function(err, restaurant){
             if(err){
                 deferred.reject(err);
             }
@@ -43,15 +42,48 @@ module.exports = function(mongoose, db) {
         return deferred.promise;
     }
 
-    function updateComment(restaurantId, userId, comment){
+    function updateMenu(restaurantId, menu){
         var deferred = q.defer();
-
+        restaurantModel.update({id: restaurantId},
+            {$push: {menus: menu}},
+            {upsert: true, new: true},
+            function(err, doc){
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(doc);
+                }
+            });
         return deferred.promise;
     }
 
-    function updateMenu(restaurantId, userId, menu){
+    function updateComment(restaurantId, comment){
         var deferred = q.defer();
+        restaurantModel.update({id: restaurantId},
+            {$push: {comments: comment}},
+            {upsert: true, new: true},
+            function(err, doc){
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(doc);
+                }
+            });
+        return deferred.promise;
+    }
 
+    function createField(formid, field){
+        var deferred = q.defer();
+        formModel.update({_id: formid},
+            {$push: {fields: field}},
+            {upsert: true, new: true},
+            function(err, doc){
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(doc);
+                }
+            });
         return deferred.promise;
     }
 };

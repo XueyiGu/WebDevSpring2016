@@ -15,7 +15,10 @@ module.exports = function(mongoose, db) {
         findAllUsers: findAllUsers,
         updateUser: updateUser,
         updateUserByAdmin: updateUserByAdmin,
-        deleteUserById: deleteUserById
+        deleteUserById: deleteUserById,
+
+        addMenu: addMenu,
+        addComment: addComment
     };
     return api;
 
@@ -167,5 +170,36 @@ module.exports = function(mongoose, db) {
         });
         return deferred.promise;
     }
+
+    function addMenu(username, menu){
+        var deferred = q.defer();
+        userModel.update({username: username},
+            {$push: {menus: menu}},
+            {upsert: true, new: true},
+            function(err, doc){
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(doc);
+                }
+            });
+        return deferred.promise;
+    }
+
+    function addComment(username, comment){
+        var deferred = q.defer();
+        userModel.update({username: username},
+            {$push: {comments: comment}},
+            {upsert: true, new: true},
+            function(err, doc){
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(doc);
+                }
+            });
+        return deferred.promise;
+    }
+
 
 };

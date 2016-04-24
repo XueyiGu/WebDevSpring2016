@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
 
-// default to a 'localhost' configuration:
+// default to a 'localhost' configuration for assignment
 var connection_string = 'mongodb://localhost/xueyigu';
 
 // if OPENSHIFT env variables are present, use the available connection info:
@@ -46,7 +46,7 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
 var db = mongoose.connect(connection_string);
 console.log(mongoose);
 
-require("./public/assignment/server/app.js")(app, mongoose, db, passport, LocalStrategy);
+//require("./public/assignment/server/app.js")(app, mongoose, db, passport, LocalStrategy);
 
 //project
 
@@ -59,6 +59,7 @@ var yelp = new Yelp({
     token: 'EaAFObDQnbWIVrmgeQ1Fh6h3Trk9mt-I',
     token_secret: 'nqziy8fbib4_31d9sGH7EgvfVU4',
 });
+
 require("./public/project/server/app.js")(app, yelp, mongoose, db, passport, LocalStrategy);
 
 app.listen(port, ipaddress);

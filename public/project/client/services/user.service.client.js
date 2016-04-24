@@ -21,7 +21,10 @@
             deleteUserById: deleteUserById,
 
             getCurrentUser: getCurrentUser,
-            logout: logout
+            logout: logout,
+
+            addMenu: addMenu,
+            addComment: addComment
         };
 
         return api;
@@ -31,7 +34,7 @@
             //creates a Defered Object which represents a task which will finish in the future
             var deferred = $q.defer();
             $http
-                .post('/api/assignment/register', user)
+                .post('/api/project/register', user)
                 .then(function(response){
                     deferred.resolve(response);
                 });
@@ -42,7 +45,7 @@
         {
             var deferred = $q.defer();
             $http
-                .post('/api/assignment/user?username='+ username + '&password='+ password)
+                .post('/api/project/user?username='+ username + '&password='+ password)
                 .then(function(user){
                     console.log('user.service.client: '+user);
                     deferred.resolve(user);
@@ -54,7 +57,7 @@
         {
             var deferred = $q.defer();
             $http
-                .put('/api/assignment/user/' + userId, currentUser)
+                .put('/api/project/user/' + userId, currentUser)
                 .then(function(response){
                     deferred.resolve(response);
                 });
@@ -65,7 +68,7 @@
         {
             var deferred = $q.defer();
             $http
-                .put('/api/assignment/user/updateUserByAdmin/'+userId, user)
+                .put('/api/project/user/updateUserByAdmin/'+userId, user)
                 .then(function(response){
                     deferred.resolve(response);
                 });
@@ -76,7 +79,7 @@
         {
             var deferred = $q.defer();
             $http
-                .get('/api/assignment/user/findAllUsers')
+                .get('/api/project/user/findAllUsers')
                 .then(function(response){
                     deferred.resolve(response);
                 });
@@ -88,7 +91,7 @@
         {
             var deferred = $q.defer();
             $http
-                .get('/api/assignment/user?username=' + username)
+                .get('/api/project/user?username=' + username)
                 .then(function(response){
                     deferred.resolve(response);
                 });
@@ -99,7 +102,7 @@
         {
             var deferred = $q.defer();
             $http
-                .delete('/api/assignment/user/'+userId)
+                .delete('/api/project/user/'+userId)
                 .then(function(response){
                     deferred.resolve(response);
                 });
@@ -110,7 +113,7 @@
         {
             var deferred = $q.defer();
             $http
-                .get('/api/assignment/loggedin')
+                .get('/api/project/loggedin')
                 .then(function(user){
                     deferred.resolve(user);
                 });
@@ -119,7 +122,25 @@
 
         function logout(){
             var deferred = $q.defer();
-            $http.post('/api/assignment/logout')
+            $http.post('/api/project/logout')
+                .then(function(response){
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+
+        function addMenu(menu){
+            var deferred = $q.defer();
+            $http.post('/api/project/user/addMenu', menu)
+                .then(function(response){
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+
+        function addComment(comment){
+            var deferred = $q.defer();
+            $http.post('/api/project/user/addComment', comment)
                 .then(function(response){
                     deferred.resolve(response);
                 });

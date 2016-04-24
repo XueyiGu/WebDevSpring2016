@@ -12,6 +12,7 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
     app.get('/api/assignment/user/:username',           findUserByName);
 
     app.post('/api/assignment/login', passport.authenticate('local'),login);
+    //app.post('/api/assignment/login',login);
     app.get('/api/assignment/loggedin', loggedin);
     app.post('/api/assignment/logout', logout);
     app.post('/api/assignment/register',                   register); //create user

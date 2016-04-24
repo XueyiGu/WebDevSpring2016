@@ -12,7 +12,10 @@
     {
         var api = {
             search: search,
-            restaurantDetail: restaurantDetail
+            restaurantDetail: restaurantDetail,
+            createRestaurant: createRestaurant,
+            addMenu: addMenu,
+            addComment: addComment
         };
 
         return api;
@@ -30,10 +33,52 @@
         function restaurantDetail(restaurantId){
             var deferred = $q.defer();
             $http
-                .post('api/project/restaurant/detail', restaurantId)
+                .get('/api/project/restaurant/detail/' + restaurantId)
                 .then(function(response){
                     deferred.resolve(response)
+                },
+                function(err){
+                    deferred.reject(err);
                 });
+            return deferred.promise;
+        }
+
+        function createRestaurant(restaurant){
+            var deferred = $q.defer();
+            $http
+                .put('/api/project/restaurant/createRestaurant', restaurant)
+                .then(function(response){
+                        deferred.resolve(response)
+                    },
+                    function(err){
+                        deferred.reject(err);
+                    });
+            return deferred.promise;
+        }
+
+        function addMenu(restaurantId, menu){
+            var deferred = $q.defer();
+            $http
+                .put('/api/project/restaurant/'+ restaurantId + '/addMenu', menu)
+                .then(function(response){
+                        deferred.resolve(response)
+                    },
+                    function(err){
+                        deferred.reject(err);
+                    });
+            return deferred.promise;
+        }
+
+        function addComment(restaurantId, comment){
+            var deferred = $q.defer();
+            $http
+                .post('/api/project/restaurant/addComment', comment)
+                .then(function(response){
+                        deferred.resolve(response)
+                    },
+                    function(err){
+                        deferred.reject(err);
+                    });
             return deferred.promise;
         }
 
