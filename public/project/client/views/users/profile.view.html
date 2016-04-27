@@ -1,122 +1,139 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Profile</h1>
+<section id="gallery" class="parallax-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10 col-sm-12 text-center">
+                <h1 class="heading">Profile</h1>
+                <hr>
+            </div>
             <div ng-if="error" class="alert alert-danger">
                 {{error}}
             </div>
 
             <div ng-if="message" class="alert alert-info">
-            {{message}}
+                {{message}}
             </div>
 
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label for="username" class="col-sm-2 control-label">Username:</label>
-                    <div class="col-sm-10">
-                        <input ng-model="currentUser.username" type="text" class="form-control" id="username" placeholder="Username">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Password:</label>
-                    <div class="col-sm-10">
-                        <input ng-model="currentUser.password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="firstname" class="col-sm-2 control-label">First Name:</label>
-                    <div class="col-sm-10">
-                        <input ng-model="currentUser.firstName"  type="text" class="form-control" id="firstname" placeholder="First Name">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="lastname" class="col-sm-2 control-label">Last Name:</label>
-                    <div class="col-sm-10">
-                        <input ng-model="currentUser.lastName" type="text" class="form-control" id="lastname" placeholder="Last Name">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Email:</label>
-                    <div class="col-sm-10">
-                        <input ng-model="currentUser.emails" type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="phones" class="col-sm-2 control-label">Phone:</label>
-                    <div class="col-sm-10">
-                        <input ng-model="currentUser.phones" type="text" class="form-control" id="phones" placeholder="phone">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button ng-click="updateUser(currentUser)" class="btn btn-primary btn-block">Update Profile</button>
-                    </div>
-                </div>
-            </form>
-            <br>
-            <h3>You added menus</h3>
-            <div class="tab-content table-responsive">
-                <table class="table table-striped table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <div>
-                            <th>
-                                Restaurant
-                            </th>
+            <div class="col-md-offset-1 col-md-10 col-sm-12 wow fadeIn" data-wow-delay="0.9s">
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">Username:</label>
+                        <div class="col-sm-10">
+                            <input ng-model="currentUser.username" type="text" class="form-control" id="username" placeholder="Username">
                         </div>
-                        <div class="col-xs-4">
-                            <th>
-                                <a ng-click="sortType = 'menu.name'; sortReverse = !sortReverse">Menu Name
-                                    <span ng-show="sortType == 'menu.name' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
-                                    <span ng-show="sortType == 'menu.name' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
-                                </a>
-                            </th>
-                        </div>
-                        <div class="col-xs-4">
-                            <th>
-                                <a  ng-click="sortType = 'menu.price'; sortReverse = !sortReverse">Menu Price
-                                    <span ng-show="sortType == 'menu.price' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
-                                    <span ng-show="sortType == 'menu.price' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
-                                </a>
-                            </th>
-                        </div>
-                        <div class="col-xs-4">
-                            <th>
-                                <a ng-click="sortType = 'menu.created'; sortReverse = !sortReverse">Updated Time
-                                    <span ng-show="sortType == 'menu.created' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
-                                    <span ng-show="sortType == 'menu.created' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
-                                </a>
-                            </th>
-                        </div>
-                    </tr>
-                    </thead>
+                    </div>
 
-                    <tbody>
-                    <tr ng-repeat="menu in currentUser.menus">
-                        <td><a href="#/restaurant/{{menu.restaurant_id}}">{{menu.restaurant_id}}</a></td>
-                        <td>{{menu.name}}</td>
-                        <td>{{menu.price}}</td>
-                        <td>{{menu.created}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <br>
-                <div ng-if="currentUser.comments">
-                    <h3>You added comments</h3>
-                    <ul ng-repeat="comment in currentUser.comments">
-                        <li>
-                            <h6>{{comment.title}} for <a href="#/restaurant/{{comment.restaurant_id}}">{{comment.restaurant_id}}</a></h6>
-                            <p>{{comment.detail}}</p>
-                        </li>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">Password:</label>
+                        <div class="col-sm-10">
+                            <input ng-model="currentUser.password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                        </div>
+                    </div>
 
-                    </ul>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-2 control-label">First Name:</label>
+                        <div class="col-sm-10">
+                            <input ng-model="currentUser.firstName"  type="text" class="form-control" id="firstname" placeholder="First Name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-2 control-label">Last Name:</label>
+                        <div class="col-sm-10">
+                            <input ng-model="currentUser.lastName" type="text" class="form-control" id="lastname" placeholder="Last Name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Email:</label>
+                        <div class="col-sm-10">
+                            <input ng-model="currentUser.emails" type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phones" class="col-sm-2 control-label">Phone:</label>
+                        <div class="col-sm-10">
+                            <input ng-model="currentUser.phones" type="text" class="form-control" id="phones" placeholder="phone">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button ng-click="updateUser(currentUser)" class="btn btn-primary btn-block">Update Profile</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-offset-1 col-md-10 col-sm-12 text-center">
+                <h1 class="heading">You added Menus</h1>
+                <hr>
+            </div>
+            <div class="col-md-offset-1 col-md-10 col-sm-12 wow fadeIn" data-wow-delay="0.9s">
+                <div class="tab-content table-responsive ">
+                    <table class="table table-striped table-bordered table-hover"> 
+                        <thead> 
+                            <tr> 
+                                <div><th>Restaurant </th> </div>
+                                <div class="col-xs-4"> 
+                                    <th> <a ng-click="sortType = 'menu.name'; sortReverse = !sortReverse">Menu Name
+                                        <span ng-show="sortType == 'menu.name' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span> 
+                                        <span ng-show="sortType == 'menu.name' && sortReverse" class="glyphicon glyphicon-triangle-top"></span> 
+                                    </a> 
+                                    </th> 
+                                </div> 
+                                <div class="col-xs-4">
+                                    <th> <a  ng-click="sortType = 'menu.price'; sortReverse = !sortReverse">Menu Price 
+                                        <span ng-show="sortType == 'menu.price' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span> 
+                                        <span ng-show="sortType == 'menu.price' && sortReverse" class="glyphicon glyphicon-triangle-top"></span> 
+                                    </a> 
+                                    </th> 
+                                </div> 
+                                <div class="col-xs-4"> 
+                                    <th> 
+                                        <a ng-click="sortType = 'menu.created'; sortReverse = !sortReverse">Updated Time 
+                                            <span ng-show="sortType == 'menu.created' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span> 
+                                            <span ng-show="sortType == 'menu.created' && sortReverse" class="glyphicon glyphicon-triangle-top"></span> 
+                                        </a> 
+                                    </th> 
+                                </div> 
+                                <div> 
+                                    <th> Action </th> 
+                                </div> 
+                                <div> 
+                                    <th hidden="true"> menu_id </th> 
+                                </div> 
+                            </tr> 
+                        </thead>  
+                        <tbody> 
+                        <tr ng-repeat="menu in currentUser.menus"> 
+                            <td><a href="#/restaurant/{{menu.restaurant_id}}">{{menu.restaurant_id}}</a></td> 
+                            <td>{{menu.name}}</td> 
+                            <td>{{menu.price}}</td> 
+                            <td>{{menu.created}}</td> 
+                            <td hidden="true">{{menu._id}}</td> 
+                            <td> 
+                                <button class="glyphicon glyphicon-remove btn btn-danger" ng-click="deleteMenu(menu)"></button> 
+                            </td> 
+                        </tr> 
+                        </tbody> 
+                    </table>
+            </div>
+
+                <div>
+                    <div class="col-md-offset-1 col-md-10 col-sm-12 text-center">
+                        <h1 class="heading">Your Comments</h1>
+                        <hr>
+                    </div>
+                    <div ng-if="currentUser.comments" class="col-md-offset-1 col-md-10 col-sm-12 wow fadeIn" data-wow-delay="0.9s">
+                        <ul ng-repeat="comment in currentUser.comments"> 
+                            <li> 
+                                <h4>{{comment.title}} for <a href="#/restaurant/{{comment.restaurant_id}}">{{comment.restaurant_id}}</a></h4> 
+                                <p>{{comment.detail}}</p> 
+                            </li>  
+                        </ul> 
+                    </div>
                 </div>
         </div>
     </div>
-</div>
-</div>
+    </div>
+</section>

@@ -15,7 +15,8 @@
             restaurantDetail: restaurantDetail,
             createRestaurant: createRestaurant,
             addMenu: addMenu,
-            addComment: addComment
+            addComment: addComment,
+            deleteMenu: deleteMenu
         };
 
         return api;
@@ -79,6 +80,15 @@
                     function(err){
                         deferred.reject(err);
                     });
+            return deferred.promise;
+        }
+
+        function deleteMenu(menu){
+            var deferred = $q.defer();
+            $http.post('/api/project/restaurant/deleteMenu', menu)
+                .then(function(response){
+                    deferred.resolve(response);
+                });
             return deferred.promise;
         }
 

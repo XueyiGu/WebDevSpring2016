@@ -18,7 +18,8 @@ module.exports = function(mongoose, db) {
         deleteUserById: deleteUserById,
 
         addMenu: addMenu,
-        addComment: addComment
+        addComment: addComment,
+        deleteMenu: deleteMenu
     };
     return api;
 
@@ -47,19 +48,19 @@ module.exports = function(mongoose, db) {
     {
         //return userModel.update({_id: userId}, {$set: newUser});
         var deferred = q.defer();
-        userModel.update({_id: userId}, {$set: newUser}, function(err, user) {
-            if(err){
-                deferred.reject(err);
-            }else{
-                userModel.find({_id: userId},function(err, user){
-                    if(err){
-                        deferred.reject(err);
-                    }
-                    else{
-                        deferred.resolve(user);
-                    }
-                });
-            }
+        userModel.update({_id: userId},
+            {username: newUser.username,
+            password: newUser.password,
+            firstName: newUser.firstName,
+            lastName: newUser.lastName,
+            phones: newUser.phones,
+            emails: newUser.emails},
+            function(err, user) {
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(user);
+                }
         });
 
         return deferred.promise;
@@ -201,5 +202,28 @@ module.exports = function(mongoose, db) {
         return deferred.promise;
     }
 
+    function deleteMenu(menu){
+        var deferred = q.defer();
+        userModel.findOne(
+            {
+                _id: menu.userId
+            },
+            function(err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                }
+                else {
+                    for (var i in doc.menus) {
+                        if (doc.menus[i]._id == menu._id) {
+                            doc.menus.splice(i, 1);
+                        }
+                    }
+                    doc.save();
+                    deferred.resolve(doc.menus);
+                }
+            }
+        );
+        return deferred.promise;
+    }
 
 };

@@ -24,7 +24,8 @@
             logout: logout,
 
             addMenu: addMenu,
-            addComment: addComment
+            addComment: addComment,
+            deleteMenu: deleteMenu
         };
 
         return api;
@@ -144,6 +145,18 @@
                 .then(function(response){
                     deferred.resolve(response);
                 });
+            return deferred.promise;
+        }
+
+        function deleteMenu(menu){
+            var deferred = $q.defer();
+            $http.post('/api/project/user/deleteMenu', menu)
+                .then(function(response){
+                    deferred.resolve(response);
+                },
+                    function (err) {
+                        deferred.reject(err);
+                    });
             return deferred.promise;
         }
     }

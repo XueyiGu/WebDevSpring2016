@@ -12,7 +12,8 @@ module.exports = function(mongoose, db) {
         searchRestaurantById: searchRestaurantById,
         createRestaurant: createRestaurant,
         updateComment: updateComment,
-        updateMenu: updateMenu
+        updateMenu: updateMenu,
+        deleteMenu: deleteMenu
     };
     return api;
 
@@ -72,6 +73,29 @@ module.exports = function(mongoose, db) {
         return deferred.promise;
     }
 
+    function deleteMenu(menu){
+        var deferred = q.defer();
+        restaurantModel.find(
+            {
+                _id: menu.restaurant_id
+            },
+            function(err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                }
+                else {
+                    for (var i in doc.menus) {
+                        if (doc.menus[i]._id == menu._id) {
+                            doc.menus.splice(i, 1);
+                        }
+                    }
+                    doc.save();
+                    deferred.resolve(doc.menus);
+                }
+            }
+        );
+        return deferred.promise;
+    }
     function createField(formid, field){
         var deferred = q.defer();
         formModel.update({_id: formid},

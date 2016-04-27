@@ -1,28 +1,35 @@
 /**
  * Created by ceres on 2/17/16.
  */
-(function(){
-    "use strict";
-    angular
-        .module("PriceMatchApp")
-        .controller("HomeController", homeController);
+var app = angular.module("PriceMatchApp");
+app.controller("HomeController", homeController);
 
-    function homeController(RestaurantService) {
-        var vm = this;
 
-        vm.search = search;
+function homeController($scope, $rootScope, $location, RestaurantService) {
 
-        function init() {
+    var vm = this;
 
-        }
-        init();
+    $scope.search = search;
 
-        function search(movie) {
-            OmdbService
-                .searchMovieByTitle(movie.title)
-                .then(function(response){
-                    vm.data = response.data;
-                });
-        }
+    function init() {
+        //$scope.restaurant = {'name': 'Starbucks', 'location': 'Seattle'};
+        //search($scope.restaurant);
     }
-})();
+    init();
+
+    function search(restaurant) {
+        RestaurantService
+            .search(restaurant)
+            .then(
+                function(response){
+                    if(response){
+                        $scope.restaurants = response.data;
+                        $rootScope.restaurants = response.data;
+                        $location.url("/search");
+                    }
+                },
+                function(err) {
+                    $scope.message = err;
+                });
+    }
+}

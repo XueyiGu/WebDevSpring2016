@@ -9,6 +9,7 @@
             $routeProvider
                 .when("/home", {
                     templateUrl: "views/home/home.view.html",
+                    controller: "HomeController",
                     resolve: {
                         loggedin: checkCurrentUser
                     }

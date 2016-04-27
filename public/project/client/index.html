@@ -29,7 +29,13 @@
     <!-- bootstrap-->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="css/dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/nivo-lightbox.css">
+    <link rel="stylesheet" href="css/nivo_themes/default/default.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 
@@ -53,13 +59,13 @@
     <script src="views/users/register.controller.js"></script>
     <script src="views/search/search.controller.js"></script>
     <script src="views/search/restaurant.controller.js"></script>
+    <script src="views/home/home.controller.js"></script>
 
 </head>
 <body ng-controller="MainController">
+
 <div >
     <div ng-include="'views/header/header.view.html'"></div>
-
-    <div ng-include="'views/sidebar/sidebar.view.html'"></div>
 
     <div ng-view>
         <div ng-class="{'active': $location.url()=='/home'}"></div>

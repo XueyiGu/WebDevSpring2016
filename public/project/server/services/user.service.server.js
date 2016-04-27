@@ -11,42 +11,43 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
     app.get('/api/project/user/:id',                 findUserById);
     app.get('/api/project/user/:username',           findUserByName);
 
-    //app.post('/api/project/user',passport.authenticate('local'),login);
+    app.post('/api/project/user',passport.authenticate('local'),login);
     app.get('/api/project/loggedin', loggedin);
     app.post('/api/project/logout', logout);
-    app.post('/api/project/register',                   register); //create user
-    app.post('/api/project/user', auth, createUser),
+    app.post('/api/project/register',                   register); // user register
+    app.post('/api/project/user', auth, createUser);
 
 
     app.put('/api/project/user/:id', auth,             update);
-    app.put('/api/project/user/updateUserByAdmin/:id', auth,   updateUserByAdmin)
+    app.put('/api/project/user/updateUserByAdmin/:id', auth,   updateUserByAdmin);
     app.delete('/api/project/user/:id',  auth,            deleteUserById);
 
     app.post('/api/project/user/addComment', addComment);
     app.post('/api/project/user/addMenu', addMenu);
+    app.post('/api/project/user/deleteMenu', deleteMenu);
 
-    //passport.use(new LocalStrategy(localStrategy));
-    //passport.serializeUser(serializeUser);
-    //passport.deserializeUser(deserializeUser);
-    //
-    //function localStrategy(username, password, done) {
-    //    userModel
-    //        .findOne({username: username})
-    //        .then(
-    //            function(user) {
-    //                if (user == null) {
-    //                    return done(null, false);
-    //                }else if(bcrypt.compareSync(password, user.password) || password == user.password) {
-    //                    return done(null, user);
-    //                }else {
-    //                    return done(null, false);
-    //                }
-    //            },
-    //            function(err) {
-    //                if (err) { return done(err); }
-    //            }
-    //        );
-    //}
+    passport.use(new LocalStrategy(localStrategy));
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+
+    function localStrategy(username, password, done) {
+        userModel
+            .findOne({username: username})
+            .then(
+                function(user) {
+                    if (user == null) {
+                        return done(null, false);
+                    }else if(bcrypt.compareSync(password, user.password) || password == user.password) {
+                        return done(null, user);
+                    }else {
+                        return done(null, false);
+                    }
+                },
+                function(err) {
+                    if (err) { return done(err); }
+                }
+            );
+    }
 
     function serializeUser(user, done) {
         done(null, user);
@@ -63,11 +64,6 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
                     done(err, null);
                 }
             );
-    }
-
-    function ensureAuthenticated(req, res, next) {
-        if (req.isAuthenticated()) { return next(); }
-        res.redirect('/#/login');
     }
 
     function login(req, res) {
@@ -321,6 +317,17 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
         var username = comment.username;
         userModel
             .addComment(username, comment)
+            .then(function(doc){
+                    res.json(doc);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
+    }
+
+    function deleteMenu(req, res){
+        var menu = req.body;
+        userModel.deleteMenu(menu)
             .then(function(doc){
                     res.json(doc);
                 },

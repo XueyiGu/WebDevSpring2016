@@ -9,6 +9,8 @@ module.exports = function(app, yelp, restaurantModel) {
     app.put('/api/project/restaurant/:restaurantId/addMenu', addMenu);
     app.post('/api/project/restaurant/addComment', addComment);
 
+    app.post('/api/project/restaurant/deleteMenu', deleteMenu);
+
     function search(req, res)
     {
         var restaurant = req.body;
@@ -68,6 +70,19 @@ module.exports = function(app, yelp, restaurantModel) {
         var comment = req.body;
         restaurantModel
             .updateComment(comment.restaurant_id, comment)
+            .then(
+                function(restuarant){
+                    res.json(restuarant);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
+    }
+
+    function deleteMenu(req, res){
+        var menu = req.body;
+        restaurantModel
+            .deleteMenu(menu)
             .then(
                 function(restuarant){
                     res.json(restuarant);

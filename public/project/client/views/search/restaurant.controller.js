@@ -15,10 +15,6 @@ function restaurantController($scope, $rootScope, $routeParams, RestaurantServic
     $scope.clickAdd = clickAdd;
     $scope.addComment = addComment;
 
-    $scope.sortType     = 'menu.name'; // set the default sort type
-    $scope.sortReverse  = false;  // set the default sort order
-
-
     function init() {
 
         restaurantId = $routeParams.restaurantId;
