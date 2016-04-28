@@ -12,6 +12,19 @@
         $scope.login = login;
 
         function login(user) {
+            if(user == null){
+                $scope.message = 'Username and Password could not be null';
+                return;
+            }
+            if(user.username == null){
+                $scope.message = 'Please input your username';
+                return;
+            }
+            if(user.password == null){
+                $scope.message = 'Please input your password';
+                return;
+            }
+
             UserService
                 .findUserByCredentials(user)
                 .then(
