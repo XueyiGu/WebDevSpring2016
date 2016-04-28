@@ -7,13 +7,13 @@
         .module("PriceMatchApp")
         .controller("ProfileController", profileController);
 
-    function profileController($scope, $rootScope, UserService, RestaurantService, $location) {
+    function profileController($scope, $rootScope, UserService, RestaurantService, MenuService, CommentService, $location) {
 
         $scope.updateUser = updateUser;
         $scope.deleteMenu = deleteMenu;
+        $scope.deleteComment = deleteComment;
 
         function init(){
-            console.log('begin profile');
             UserService
                 .getCurrentUser()
                 .then(function(user){
@@ -29,7 +29,6 @@
         init();
 
         function updateUser(user) {
-            console.log("in update user");
             var userId = user._id;
             var newUser = {
                 "username": user.username,
@@ -39,38 +38,42 @@
                 "emails": user.emails,
                 "phones": user.phones
             };
-            console.log("in update user");
-            return;
-            //UserService
-            //    .updateUser(userId, newUser)
-            //    .then(
-            //        function(response){
-            //            console.log('successfully updated the user');
-            //            return;
-            //            init();
-            //            $scope.message = 'successfully updated';
-            //        },
-            //        function(err){
-            //            $scope.error = err;
-            //        });
-        };
+
+            UserService
+                .updateUser(userId, newUser)
+                .then(
+                    function(response){
+                        init();
+                        $scope.message = 'successfully updated';
+                    },
+                    function(err){
+                        $scope.error = err;
+                    });
+        }
 
         function deleteMenu(menu){
-            var userId = $scope.currentUser._id;
-            menu.userId = userId;
-            console.log('user id: '+menu.userId);
-            UserService
+            var username = $scope.currentUser.username;
+            menu.username = username;
+            MenuService
                 .deleteMenu(menu)
                 .then(
                     function(response){
-                        RestaurantService
-                            .deleteMenu(menu)
-                            .then(function(response){
-                                init();
-                            },
-                            function(err){
-                                $scope.error = err;
-                            });
+                        init();
+                    },
+                    function(err){
+                        $scope.error = err;
+                    }
+                );
+        }
+
+        function deleteComment(comment){
+            var username = $scope.currentUser.username;
+            comment.username = username;
+            CommentService
+                .deleteComment(comment)
+                .then(
+                    function(response){
+                        init();
                     },
                     function(err){
                         $scope.error = err;

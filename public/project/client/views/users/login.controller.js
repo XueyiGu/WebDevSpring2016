@@ -13,7 +13,7 @@
 
         function login(user) {
             UserService
-                .findUserByCredentials(user.username, user.password)
+                .findUserByCredentials(user)
                 .then(
                     function(user){
                         if(user){

@@ -15,11 +15,7 @@ module.exports = function(mongoose, db) {
         findAllUsers: findAllUsers,
         updateUser: updateUser,
         updateUserByAdmin: updateUserByAdmin,
-        deleteUserById: deleteUserById,
-
-        addMenu: addMenu,
-        addComment: addComment,
-        deleteMenu: deleteMenu
+        deleteUserById: deleteUserById
     };
     return api;
 
@@ -145,7 +141,7 @@ module.exports = function(mongoose, db) {
 
     function findUserByCredentials(credentials) {
         var deferred = q.defer();
-        userModel.findOne({username: credentials.username, password: credentials.password}, function(err, user){
+        userModel.find({username: credentials.username, password: credentials.password}, function(err, user){
             if(err){
                 console.log(err);
                 deferred.reject(err);
@@ -169,60 +165,6 @@ module.exports = function(mongoose, db) {
                 deferred.resolve(user);
             }
         });
-        return deferred.promise;
-    }
-
-    function addMenu(username, menu){
-        var deferred = q.defer();
-        userModel.update({username: username},
-            {$push: {menus: menu}},
-            {upsert: true, new: true},
-            function(err, doc){
-                if(err){
-                    deferred.reject(err);
-                }else{
-                    deferred.resolve(doc);
-                }
-            });
-        return deferred.promise;
-    }
-
-    function addComment(username, comment){
-        var deferred = q.defer();
-        userModel.update({username: username},
-            {$push: {comments: comment}},
-            {upsert: true, new: true},
-            function(err, doc){
-                if(err){
-                    deferred.reject(err);
-                }else{
-                    deferred.resolve(doc);
-                }
-            });
-        return deferred.promise;
-    }
-
-    function deleteMenu(menu){
-        var deferred = q.defer();
-        userModel.findOne(
-            {
-                _id: menu.userId
-            },
-            function(err, doc) {
-                if (err) {
-                    deferred.reject(err);
-                }
-                else {
-                    for (var i in doc.menus) {
-                        if (doc.menus[i]._id == menu._id) {
-                            doc.menus.splice(i, 1);
-                        }
-                    }
-                    doc.save();
-                    deferred.resolve(doc.menus);
-                }
-            }
-        );
         return deferred.promise;
     }
 

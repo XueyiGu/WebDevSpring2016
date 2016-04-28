@@ -15,7 +15,10 @@ function searchController($scope, $rootScope, RestaurantService) {
         $scope.restaurant = {'name': 'Starbucks', 'location': 'Seattle'};
         search($scope.restaurant);
     }
-    init();
+    if(!$rootScope.restaurants){
+        init();
+    }
+
 
     function search(restaurant) {
         RestaurantService

@@ -13,10 +13,7 @@
         var api = {
             search: search,
             restaurantDetail: restaurantDetail,
-            createRestaurant: createRestaurant,
-            addMenu: addMenu,
-            addComment: addComment,
-            deleteMenu: deleteMenu
+            createRestaurant: createRestaurant
         };
 
         return api;
@@ -56,41 +53,5 @@
                     });
             return deferred.promise;
         }
-
-        function addMenu(restaurantId, menu){
-            var deferred = $q.defer();
-            $http
-                .put('/api/project/restaurant/'+ restaurantId + '/addMenu', menu)
-                .then(function(response){
-                        deferred.resolve(response)
-                    },
-                    function(err){
-                        deferred.reject(err);
-                    });
-            return deferred.promise;
-        }
-
-        function addComment(restaurantId, comment){
-            var deferred = $q.defer();
-            $http
-                .post('/api/project/restaurant/addComment', comment)
-                .then(function(response){
-                        deferred.resolve(response)
-                    },
-                    function(err){
-                        deferred.reject(err);
-                    });
-            return deferred.promise;
-        }
-
-        function deleteMenu(menu){
-            var deferred = $q.defer();
-            $http.post('/api/project/restaurant/deleteMenu', menu)
-                .then(function(response){
-                    deferred.resolve(response);
-                });
-            return deferred.promise;
-        }
-
     }
 })();

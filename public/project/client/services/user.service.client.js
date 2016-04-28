@@ -21,11 +21,7 @@
             deleteUserById: deleteUserById,
 
             getCurrentUser: getCurrentUser,
-            logout: logout,
-
-            addMenu: addMenu,
-            addComment: addComment,
-            deleteMenu: deleteMenu
+            logout: logout
         };
 
         return api;
@@ -42,14 +38,18 @@
             return deferred.promise;
         }
 
-        function findUserByCredentials(username, password)
+        function findUserByCredentials(user)
         {
             var deferred = $q.defer();
+            console.log(user);
             $http
-                .post('/api/project/user?username='+ username + '&password='+ password)
+                .post('/api/project/user', user)
                 .then(function(user){
                     console.log('user.service.client: '+user);
                     deferred.resolve(user);
+                },
+                function(err){
+                    deferred.reject(err);
                 });
             return deferred.promise;
         }
@@ -136,27 +136,6 @@
                 .then(function(response){
                     deferred.resolve(response);
                 });
-            return deferred.promise;
-        }
-
-        function addComment(comment){
-            var deferred = $q.defer();
-            $http.post('/api/project/user/addComment', comment)
-                .then(function(response){
-                    deferred.resolve(response);
-                });
-            return deferred.promise;
-        }
-
-        function deleteMenu(menu){
-            var deferred = $q.defer();
-            $http.post('/api/project/user/deleteMenu', menu)
-                .then(function(response){
-                    deferred.resolve(response);
-                },
-                    function (err) {
-                        deferred.reject(err);
-                    });
             return deferred.promise;
         }
     }

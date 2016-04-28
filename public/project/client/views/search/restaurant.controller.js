@@ -4,14 +4,14 @@
 var app = angular.module("PriceMatchApp");
 app.controller("RestaurantController", restaurantController);
 
-function restaurantController($scope, $rootScope, $routeParams, RestaurantService, UserService) {
+function restaurantController($scope, $rootScope, $routeParams, RestaurantService, MenuService, CommentService) {
 
     var vm = this;
     var restaurantId = null;
     var restaurants = null;
 
     $scope.search = search;
-    $scope.commitAdd = commitAdd;
+    $scope.commitAdd = addMenu;
     $scope.clickAdd = clickAdd;
     $scope.addComment = addComment;
 
@@ -72,13 +72,22 @@ function restaurantController($scope, $rootScope, $routeParams, RestaurantServic
     }
 
     function clickAdd(menu){
-        if(menu){
-            menu.name = null;
-            menu.price = null;
-        }
     }
 
-    function commitAdd(menu){
+    function addMenu(menu){
+        if(menu == null){
+            $scope.message = "Please fill the Menu Name and Price. Please try again."
+            return;
+        }
+        if(menu.name == null){
+            $scope.message = "Menu Name should not be null. Please try again."
+            return;
+        }
+        if(menuprice == null){
+            $scope.message = "Menu Price should not be null. Please try again."
+            return;
+        }
+
         menu.username = $scope.currentUser.username;
         menu.restaurant_id = restaurantId;
         RestaurantService
@@ -87,18 +96,13 @@ function restaurantController($scope, $rootScope, $routeParams, RestaurantServic
                 //we already have this restaurant in database
                 //just add the menu to restaurant and user
                 if(response.data[0]){
-                    RestaurantService
-                        .addMenu(restaurantId, menu)
+                    MenuService
+                        .addMenu(menu)
                         .then(
                             function(response){
-                                UserService
-                                    .addMenu(menu)
-                                    .then(function(user){
-                                        init();
-                                    },
-                                    function(err){
-                                        $scope.message = err;
-                                    });
+                                init();
+                                menu.name = null;
+                                menu.price = null;
                             },
                             function(err){
                                 $scope.message = err;
@@ -115,21 +119,14 @@ function restaurantController($scope, $rootScope, $routeParams, RestaurantServic
                         .then(
                             function(response){
                                 //add menu to restaurant and user
-                                RestaurantService
-                                    .addMenu(restaurantId, menu)
+                                MenuService
+                                    .addMenu(menu)
                                     .then(function(restaurant){
-                                        UserService
-                                            .addMenu(menu)
-                                            .then(function(user){
-                                                    init();
-                                            },
-                                            function(err){
-                                                $scope.message = err;
-                                            });
-                                    },
-                                    function(err){
-                                        $scope.message = err;
-                                    });
+                                                init();
+                                        },
+                                        function(err){
+                                            $scope.message = err;
+                                        });
                             },
                             function(err){
                                 $scope.message = err;
@@ -142,24 +139,18 @@ function restaurantController($scope, $rootScope, $routeParams, RestaurantServic
     function addComment(newComment){
         newComment.username = $scope.currentUser.username;
         newComment.restaurant_id = restaurantId;
+
         RestaurantService
             .restaurantDetail(restaurantId)
             .then(function(response){
                 //we already have this restaurant in database
                 //just add the menu to restaurant and user
                 if(response.data[0]){
-                    RestaurantService
-                        .addComment(restaurantId, newComment)
+                    CommentService
+                        .addComment(newComment)
                         .then(
                             function(response){
-                                UserService
-                                    .addComment(newComment)
-                                    .then(function(user){
-                                            init();
-                                        },
-                                        function(err){
-                                            $scope.message = err;
-                                        });
+                            init();
                             },
                             function(err){
                                 $scope.message = err;
@@ -176,17 +167,10 @@ function restaurantController($scope, $rootScope, $routeParams, RestaurantServic
                         .then(
                             function(response){
                                 //add comment to restaurant and user
-                                RestaurantService
-                                    .addComment(restaurantId, newComment)
+                                CommentService
+                                    .addComment(newComment)
                                     .then(function(restaurant){
-                                            UserService
-                                                .addComment(newComment)
-                                                .then(function(user){
-                                                        init();
-                                                    },
-                                                    function(err){
-                                                        $scope.message = err;
-                                                    });
+                                            init();
                                         },
                                         function(err){
                                             $scope.message = err;

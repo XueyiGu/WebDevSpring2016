@@ -11,13 +11,21 @@ function homeController($scope, $rootScope, $location, RestaurantService) {
 
     $scope.search = search;
 
-    function init() {
-        //$scope.restaurant = {'name': 'Starbucks', 'location': 'Seattle'};
-        //search($scope.restaurant);
-    }
-    init();
-
     function search(restaurant) {
+
+        if(restaurant == null){
+            search({'name': 'starbucks', 'location': 'Seattle'});
+            return;
+        }
+        if(restaurant.name == null){
+            $scope.message = "Please type the food or restaurants you want to find";
+            return;
+        }
+
+        if(restaurant.location == null){
+            $scope.message = "Please give the location of the food or restaurants you want to find";
+            return;
+        }
         RestaurantService
             .search(restaurant)
             .then(

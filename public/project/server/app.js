@@ -9,4 +9,6 @@ module.exports = function(app, yelp, mongoose, db, passport, LocalStrategy) {
 
     var userService  = require("./services/user.service.server.js") (app, userModel, passport, LocalStrategy);
     var restaurantService  = require("./services/restaurant.service.server.js") (app, yelp, restaurantModel);
+    var menuService  = require("./services/menu.service.server.js") (app, yelp, menuModel);
+    var commentService  = require("./services/comment.service.server.js") (app, yelp, commentModel);
 }

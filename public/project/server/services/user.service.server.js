@@ -22,10 +22,6 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
     app.put('/api/project/user/updateUserByAdmin/:id', auth,   updateUserByAdmin);
     app.delete('/api/project/user/:id',  auth,            deleteUserById);
 
-    app.post('/api/project/user/addComment', addComment);
-    app.post('/api/project/user/addMenu', addMenu);
-    app.post('/api/project/user/deleteMenu', deleteMenu);
-
     passport.use(new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
@@ -68,15 +64,11 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
 
     function login(req, res) {
         var user = req.user;
-        console.log('login');
-        console.log(user);
         res.json(user);
     }
 
     function loggedin(req, res) {
         if(req.isAuthenticated()){
-            console.log('Get loggedin user');
-            console.log(req.user);
             res.json(req.user);
         }else{
             res.json('0');
@@ -265,7 +257,6 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
                         }
                     )
             });
-
     }
 
     function updateUserByAdmin(req, res){
@@ -299,40 +290,4 @@ module.exports = function(app, userModel, passport, LocalStrategy) {
             );
     }
 
-    function addMenu(req, res){
-        var menu = req.body;
-        var username = menu.username;
-        userModel
-            .addMenu(username, menu)
-            .then(function(doc){
-                res.json(doc);
-            },
-            function(err){
-                res.status(400).send(err);
-            });
-    }
-
-    function addComment(req, res){
-        var comment = req.body;
-        var username = comment.username;
-        userModel
-            .addComment(username, comment)
-            .then(function(doc){
-                    res.json(doc);
-                },
-                function(err){
-                    res.status(400).send(err);
-                });
-    }
-
-    function deleteMenu(req, res){
-        var menu = req.body;
-        userModel.deleteMenu(menu)
-            .then(function(doc){
-                    res.json(doc);
-                },
-                function(err){
-                    res.status(400).send(err);
-                });
-    }
-}
+};

@@ -52,7 +52,8 @@
                         <h5>{{menu.created}}</h5>
                     </div>
                 </div>
-                <p ng-if="currentUser">The Menus are out of date? Click <a ng-click="clickAdd(menu)" data-toggle="modal" data-target="#addMenu">here</a> to update.</p>
+                <p ng-if="currentUser == null">Want to update the Menus? Please <a href="#/register">REGISTER</a> or <a href="#/login">LOGIN</a></p>
+                <p ng-if="currentUser">The Menus are out of date? Click <a ng-click="clickAdd(addmenu)" data-toggle="modal" data-target="#addMenu">here</a> to update.</p>
                 <br>
             </div>
             <div ng-if="restaurant.comments">
@@ -73,12 +74,9 @@
 
             <div ng-if="currentUser" >
                 <div class="col-md-offset-1 col-md-10 col-sm-12 wow fadeIn" data-wow-delay="0.9s">
-                    <form action="#" method="post">
+                    <form>
                         <div class="col-md-6 col-sm-6">
                             <input name="title" ng-model="newComment.title" type="text" class="form-control" id="name" placeholder="Title">
-                        </div>
-                        <div class="col-md-6 col-sm-6">
-                            <input name="email" type="email" class="form-control" id="email" placeholder="Email">
                         </div>
                         <div class="col-md-12 col-sm-12">
                             <textarea name="message" ng-model="newComment.detail" rows="5" class="form-control" id="message" placeholder="Reviews or Comments"></textarea>
@@ -96,6 +94,9 @@
     <div id="addMenu" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
+            <div ng-if="menu.message" class="alert alert-danger">
+                {{menu.message}}
+            </div>
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -107,7 +108,7 @@
                         <form> 
                             <label>Menu Name</label> 
                             <input ng-model="addmenu.name" class="form-control" type="text" 
-                                   placeholder="Menu Name"> 
+                                   placeholder="Menu Name">
                             <br> 
                             <label>Price</label> 
                             <input ng-model="addmenu.price" class="form-control" type="text" 
